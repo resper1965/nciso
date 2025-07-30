@@ -1,0 +1,4 @@
+# 🔧 Configuração
+
+## Environment Variables
+```bash

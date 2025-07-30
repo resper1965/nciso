@@ -1,0 +1,9 @@
+# Certificados SSL
+*.crt
+*.key
+*.pem
+*.p12
+*.pfx
+ca.crt
+supabase.crt
+supabase.key

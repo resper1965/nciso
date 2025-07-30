@@ -1,0 +1,27 @@
+# 📘 PRD - Documento de Requisitos do Produto
+
+## Table of Contents
+
+- [📘 PRD - Documento de Requisitos do Produto](#table-of-contents)
+  - [🧱 Módulos Principais](./mdulos-principais.md)
+    - [1.  - Escopo e Estrutura SGSI](./mdulos-principais.md#1-escopo-e-estrutura-sgsi)
+    - [2.  - Controles e Frameworks](./mdulos-principais.md#2-controles-e-frameworks)
+    - [3.  - Auditorias](./mdulos-principais.md#3-auditorias)
+    - [4.  - Gestão de Riscos](./mdulos-principais.md#4-gesto-de-riscos)
+    - [5.  - LGPD e GDPR](./mdulos-principais.md#5-lgpd-e-gdpr)
+  - [🔍 Monitoramento e Resposta](./monitoramento-e-resposta.md)
+    - [6.  - Testes de Segurança](./monitoramento-e-resposta.md#6-testes-de-segurana)
+    - [7.  - Avaliações Estruturadas](./monitoramento-e-resposta.md#7-avaliaes-estruturadas)
+    - [8.  - Incidentes](./monitoramento-e-resposta.md#8-incidentes)
+  - [⚙️ Internos e Configuração](./internos-e-configurao.md)
+    - [9.  - Plataforma e Permissões](./internos-e-configurao.md#9-plataforma-e-permisses)
+    - [10.  - Suporte](./internos-e-configurao.md#10-suporte)
+  - [🎯 Critérios de Aceitação](./critrios-de-aceitao.md)
+    - [Funcionalidades Core](./critrios-de-aceitao.md#funcionalidades-core)
+    - [Performance](./critrios-de-aceitao.md#performance)
+    - [Segurança](./critrios-de-aceitao.md#segurana)
+  - [🚀 Roadmap](./roadmap.md)
+    - [Fase 1 (MVP)](./roadmap.md#fase-1-mvp)
+    - [Fase 2](./roadmap.md#fase-2)
+    - [Fase 3](./roadmap.md#fase-3)
+    - [Fase 4](./roadmap.md#fase-4)

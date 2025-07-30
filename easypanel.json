@@ -1,0 +1,48 @@
+{
+  "name": "nciso",
+  "description": "n.CISO - Information Security Management Platform",
+  "version": "1.0.0",
+  "type": "application",
+  "services": [
+    {
+      "name": "backend",
+      "type": "nodejs",
+      "port": 3000,
+      "build": {
+        "dockerfile": "Dockerfile.backend"
+      },
+      "environment": {
+        "NODE_ENV": "production",
+        "PORT": "3000"
+      }
+    },
+    {
+      "name": "frontend",
+      "type": "nodejs",
+      "port": 3001,
+      "build": {
+        "dockerfile": "Dockerfile.frontend"
+      },
+      "environment": {
+        "NODE_ENV": "production",
+        "NEXT_PUBLIC_API_URL": "https://${DOMAIN}/api"
+      }
+    }
+  ],
+  "proxy": {
+    "nginx": {
+      "ssl": true,
+      "domains": ["${DOMAIN}"],
+      "locations": [
+        {
+          "path": "/api",
+          "proxy_pass": "http://backend:3000"
+        },
+        {
+          "path": "/",
+          "proxy_pass": "http://frontend:3000"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "common": {
+    "actions": {
+      "create": "Crear",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "close": "Cerrar",
+      "confirm": "Confirmar",
+      "back": "Atrás",
+      "next": "Siguiente",
+      "previous": "Anterior",
+      "search": "Buscar",
+      "filter": "Filtrar",
+      "export": "Exportar",
+      "import": "Importar",
+      "refresh": "Actualizar",
+      "add": "Agregar",
+      "remove": "Remover",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "activate": "Activar",
+      "deactivate": "Desactivar"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "planned": "Planificado",
+      "implemented": "Implementado",
+      "tested": "Probado",
+      "operational": "Operacional",
+      "draft": "Borrador",
+      "pending": "Pendiente",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "error": "Error",
+      "success": "Éxito",
+      "warning": "Advertencia",
+      "info": "Información"
+    },
+    "navigation": {
+      "dashboard": "Panel",
+      "controls": "Controles",
+      "policies": "Políticas",
+      "domains": "Dominios",
+      "audit": "Auditoría",
+      "risk": "Riesgo",
+      "privacy": "Privacidad",
+      "secdevops": "SecDevOps",
+      "assessments": "Evaluaciones",
+      "cirt": "CIRT",
+      "tickets": "Tickets",
+      "settings": "Configuración",
+      "profile": "Perfil",
+      "logout": "Cerrar Sesión"
+    },
+    "forms": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "type": "Tipo",
+      "status": "Estado",
+      "date": "Fecha",
+      "email": "Correo",
+      "password": "Contraseña",
+      "confirm_password": "Confirmar Contraseña",
+      "required": "Requerido",
+      "optional": "Opcional",
+      "loading": "Cargando...",
+      "saving": "Guardando...",
+      "deleting": "Eliminando...",
+      "search_placeholder": "Escriba para buscar...",
+      "no_results": "No se encontraron resultados",
+      "validation": {
+        "name_min": "El nombre debe tener al menos 2 caracteres",
+        "description_min": "La descripción debe tener al menos 10 caracteres",
+        "control_type_required": "El tipo de control es requerido",
+        "implementation_status_required": "El estado de implementación es requerido",
+        "effectiveness_range": "La efectividad debe estar entre 0 y 100"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Elemento creado exitosamente",
+        "updated": "Elemento actualizado exitosamente",
+        "deleted": "Elemento eliminado exitosamente",
+        "saved": "Cambios guardados exitosamente"
+      },
+      "error": {
+        "general": "Ocurrió un error",
+        "not_found": "Elemento no encontrado",
+        "validation": "Error de validación",
+        "network": "Error de conexión",
+        "unauthorized": "Acceso no autorizado",
+        "forbidden": "Acceso denegado"
+      },
+      "confirm": {
+        "delete": "¿Está seguro de que desea eliminar este elemento?",
+        "unsaved_changes": "Hay cambios sin guardar. ¿Desea continuar?"
+      }
+    },
+    "controls": {
+      "title": "Controles de Seguridad",
+      "subtitle": "Gestión de controles organizacionales",
+      "new_control": "Nuevo Control",
+      "edit_control": "Editar Control",
+      "control_types": {
+        "preventive": "Preventivo",
+        "detective": "Detectivo",
+        "corrective": "Correctivo"
+      },
+      "implementation_status": {
+        "planned": "Planificado",
+        "implemented": "Implementado",
+        "tested": "Probado",
+        "operational": "Operacional"
+      },
+      "effectiveness": {
+        "title": "Reporte de Efectividad",
+        "total_controls": "Total de Controles",
+        "implemented_controls": "Controles Implementados",
+        "average_effectiveness": "Efectividad Promedio",
+        "score": "Puntuación"
+      }
+    },
+    "policies": {
+      "title": "Políticas de Seguridad",
+      "subtitle": "Gestión de políticas organizacionales",
+      "new_policy": "Nueva Política",
+      "edit_policy": "Editar Política",
+      "approval_status": {
+        "draft": "Borrador",
+        "pending": "Pendiente",
+        "approved": "Aprobado",
+        "rejected": "Rechazado"
+      }
+    },
+    "domains": {
+      "title": "Dominios de Seguridad",
+      "subtitle": "Estructura jerárquica de dominios organizacionales",
+      "new_domain": "Nuevo Dominio",
+      "edit_domain": "Editar Dominio",
+      "parent_domain": "Dominio Padre",
+      "level": "Nivel",
+      "path": "Ruta",
+      "controls_count": "Controles",
+      "no_parent": "Sin dominio padre",
+      "tree_view": "Vista de Árbol",
+      "list_view": "Vista de Lista",
+      "hierarchy": "Jerarquía",
+      "breadcrumb": "Navegación",
+      "domain_types": {
+        "governance": "Gobernanza",
+        "access_control": "Control de Acceso",
+        "network_security": "Seguridad de Redes",
+        "identity_management": "Gestión de Identidad",
+        "physical_security": "Seguridad Física",
+        "application_security": "Seguridad de Aplicaciones",
+        "data_protection": "Protección de Datos",
+        "incident_response": "Respuesta a Incidentes"
+      },
+      "validation": {
+        "name_required": "El nombre del dominio es requerido",
+        "name_min": "El nombre debe tener al menos 2 caracteres",
+        "description_min": "La descripción debe tener al menos 10 caracteres",
+        "parent_not_found": "Dominio padre no encontrado",
+        "cannot_delete_with_children": "No se puede eliminar dominio con subdominios",
+        "cannot_delete_with_controls": "No se puede eliminar dominio con controles asociados",
+        "cannot_be_parent_of_self": "El dominio no puede ser padre de sí mismo"
+      },
+      "accessibility": {
+        "expand_node": "Expandir nodo",
+        "collapse_node": "Colapsar nodo",
+        "edit_domain": "Editar dominio",
+        "delete_domain": "Eliminar dominio",
+        "tree_navigation": "Navegación del árbol de dominios"
+      }
+    },
+    "layout": {
+      "sidebar": {
+        "logo": "n.CISO",
+        "subtitle": "Security Platform"
+      },
+      "header": {
+        "search_placeholder": "Buscar...",
+        "notifications": "Notificaciones",
+        "theme": "Tema",
+        "language": "Idioma"
+      }
+    },
+    "languages": {
+      "pt-BR": "Português",
+      "en-US": "English",
+      "es": "Español"
+    },
+    "themes": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    }
+  }
+} 

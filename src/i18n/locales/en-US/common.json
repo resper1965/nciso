@@ -1,0 +1,202 @@
+{
+  "common": {
+    "actions": {
+      "create": "Create",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "close": "Close",
+      "confirm": "Confirm",
+      "back": "Back",
+      "next": "Next",
+      "previous": "Previous",
+      "search": "Search",
+      "filter": "Filter",
+      "export": "Export",
+      "import": "Import",
+      "refresh": "Refresh",
+      "add": "Add",
+      "remove": "Remove",
+      "approve": "Approve",
+      "reject": "Reject",
+      "activate": "Activate",
+      "deactivate": "Deactivate"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "planned": "Planned",
+      "implemented": "Implemented",
+      "tested": "Tested",
+      "operational": "Operational",
+      "draft": "Draft",
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "error": "Error",
+      "success": "Success",
+      "warning": "Warning",
+      "info": "Information"
+    },
+    "navigation": {
+      "dashboard": "Dashboard",
+      "controls": "Controls",
+      "policies": "Policies",
+      "domains": "Domains",
+      "audit": "Audit",
+      "risk": "Risk",
+      "privacy": "Privacy",
+      "secdevops": "SecDevOps",
+      "assessments": "Assessments",
+      "cirt": "CIRT",
+      "tickets": "Tickets",
+      "settings": "Settings",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "forms": {
+      "name": "Name",
+      "description": "Description",
+      "type": "Type",
+      "status": "Status",
+      "date": "Date",
+      "email": "Email",
+      "password": "Password",
+      "confirm_password": "Confirm Password",
+      "required": "Required",
+      "optional": "Optional",
+      "loading": "Loading...",
+      "saving": "Saving...",
+      "deleting": "Deleting...",
+      "search_placeholder": "Type to search...",
+      "no_results": "No results found",
+      "validation": {
+        "name_min": "Name must have at least 2 characters",
+        "description_min": "Description must have at least 10 characters",
+        "control_type_required": "Control type is required",
+        "implementation_status_required": "Implementation status is required",
+        "effectiveness_range": "Effectiveness must be between 0 and 100"
+      }
+    },
+    "messages": {
+      "success": {
+        "created": "Item created successfully",
+        "updated": "Item updated successfully",
+        "deleted": "Item deleted successfully",
+        "saved": "Changes saved successfully"
+      },
+      "error": {
+        "general": "An error occurred",
+        "not_found": "Item not found",
+        "validation": "Validation error",
+        "network": "Connection error",
+        "unauthorized": "Unauthorized access",
+        "forbidden": "Access denied"
+      },
+      "confirm": {
+        "delete": "Are you sure you want to delete this item?",
+        "unsaved_changes": "There are unsaved changes. Do you want to continue?"
+      }
+    },
+    "controls": {
+      "title": "Security Controls",
+      "subtitle": "Organizational controls management",
+      "new_control": "New Control",
+      "edit_control": "Edit Control",
+      "control_types": {
+        "preventive": "Preventive",
+        "detective": "Detective",
+        "corrective": "Corrective"
+      },
+      "implementation_status": {
+        "planned": "Planned",
+        "implemented": "Implemented",
+        "tested": "Tested",
+        "operational": "Operational"
+      },
+      "effectiveness": {
+        "title": "Effectiveness Report",
+        "total_controls": "Total Controls",
+        "implemented_controls": "Implemented Controls",
+        "average_effectiveness": "Average Effectiveness",
+        "score": "Score"
+      }
+    },
+    "policies": {
+      "title": "Security Policies",
+      "subtitle": "Organizational policies management",
+      "new_policy": "New Policy",
+      "edit_policy": "Edit Policy",
+      "approval_status": {
+        "draft": "Draft",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      }
+    },
+    "domains": {
+      "title": "Security Domains",
+      "subtitle": "Hierarchical structure of organizational domains",
+      "new_domain": "New Domain",
+      "edit_domain": "Edit Domain",
+      "parent_domain": "Parent Domain",
+      "level": "Level",
+      "path": "Path",
+      "controls_count": "Controls",
+      "no_parent": "No parent domain",
+      "tree_view": "Tree View",
+      "list_view": "List View",
+      "hierarchy": "Hierarchy",
+      "breadcrumb": "Navigation",
+      "domain_types": {
+        "governance": "Governance",
+        "access_control": "Access Control",
+        "network_security": "Network Security",
+        "identity_management": "Identity Management",
+        "physical_security": "Physical Security",
+        "application_security": "Application Security",
+        "data_protection": "Data Protection",
+        "incident_response": "Incident Response"
+      },
+      "validation": {
+        "name_required": "Domain name is required",
+        "name_min": "Name must have at least 2 characters",
+        "description_min": "Description must have at least 10 characters",
+        "parent_not_found": "Parent domain not found",
+        "cannot_delete_with_children": "Cannot delete domain with subdomains",
+        "cannot_delete_with_controls": "Cannot delete domain with associated controls",
+        "cannot_be_parent_of_self": "Domain cannot be parent of itself"
+      },
+      "accessibility": {
+        "expand_node": "Expand node",
+        "collapse_node": "Collapse node",
+        "edit_domain": "Edit domain",
+        "delete_domain": "Delete domain",
+        "tree_navigation": "Domain tree navigation"
+      }
+    },
+    "layout": {
+      "sidebar": {
+        "logo": "n.CISO",
+        "subtitle": "Security Platform"
+      },
+      "header": {
+        "search_placeholder": "Search...",
+        "notifications": "Notifications",
+        "theme": "Theme",
+        "language": "Language"
+      }
+    },
+    "languages": {
+      "pt-BR": "Português",
+      "en-US": "English",
+      "es": "Español"
+    },
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  }
+} 

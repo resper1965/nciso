@@ -46,7 +46,9 @@
     "start:fullstack": "node scripts/start-fullstack.js",
     "status": "node scripts/final-status.js",
     "setup:easypanel": "bash scripts/easypanel-setup.sh",
-    "deploy:vps": "bash scripts/deploy-vps.sh"
+    "setup:traefik": "bash scripts/easypanel-traefik-setup.sh",
+    "deploy:vps": "bash scripts/deploy-vps.sh",
+    "deploy:traefik": "bash deploy-easypanel-traefik.sh"
   },
   "dependencies": {
     "@kayvan/markdown-tree-parser": "^1.6.0",

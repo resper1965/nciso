@@ -10,8 +10,6 @@ const nextConfig: NextConfig = {
     // Ignorar erros de ESLint durante o build
     ignoreDuringBuilds: true,
   },
-  // Configurações de output
-  output: 'standalone',
 };
 
 export default nextConfig;

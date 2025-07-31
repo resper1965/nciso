@@ -51,7 +51,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       {/* Desktop Toggle Button */}
       <button
         onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-        className="hidden md:flex fixed left-4 top-20 z-40 p-2 rounded-lg bg-slate-800 text-white hover:bg-slate-700 transition-colors shadow-lg"
+        className="hidden md:flex fixed left-4 top-24 z-40 p-2 rounded-lg bg-slate-800 text-white hover:bg-slate-700 transition-colors shadow-lg"
         aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         {isSidebarCollapsed ? (

@@ -71,6 +71,7 @@ const resources = {
     },
     isms: {
       title: 'Sistema de Gestão de Segurança da Informação',
+      description: 'Gerencie políticas, controles e domínios para garantir conformidade e segurança organizacional.',
       overview: 'Visão Geral',
       policies: 'Políticas',
       procedures: 'Procedimentos',
@@ -81,6 +82,7 @@ const resources = {
       incidents: 'Incidentes',
       training: 'Treinamento',
       documentation: 'Documentação',
+      comingSoon: 'Em breve...',
       navigation: {
         sections: {
           governance: 'Governança',
@@ -98,6 +100,57 @@ const resources = {
           assessments: 'n.Assessments',
           platform: 'n.Platform',
           tickets: 'n.Tickets'
+        }
+      },
+      sections: {
+        overview: 'Visão Geral',
+        policies: 'Políticas',
+        controls: 'Controles',
+        domains: 'Domínios',
+        frameworks: 'Frameworks',
+        assessments: 'Avaliações',
+        documents: 'Documentos'
+      },
+      metrics: {
+        totalPolicies: 'Total de Políticas',
+        totalControls: 'Total de Controles',
+        effectiveness: 'Efetividade Média',
+        frameworks: 'Frameworks Mapeados',
+        domains: 'Domínios Cadastrados',
+        complianceScore: 'Score de Conformidade',
+        policiesActive: 'políticas ativas',
+        controlsImplemented: 'controles implementados',
+        averageEffectiveness: 'efetividade média',
+        frameworksMapped: 'frameworks mapeados',
+        domainsRegistered: 'domínios registrados',
+        overallCompliance: 'conformidade geral'
+      },
+      actions: {
+        createPolicy: 'Criar Política',
+        exportReport: 'Exportar Relatório',
+        addControl: 'Adicionar Controle',
+        edit: 'Editar',
+        assess: 'Avaliar',
+        mapFramework: 'Mapear Framework'
+      },
+      overview: {
+        recentPolicies: 'Políticas Recentes',
+        controlEffectiveness: 'Efetividade dos Controles'
+      },
+      policy: {
+        version: 'Versão',
+        lastUpdated: 'Última Atualização',
+        status: {
+          active: 'Ativa',
+          draft: 'Rascunho',
+          review: 'Em Revisão'
+        }
+      },
+      control: {
+        status: {
+          implemented: 'Implementado',
+          partial: 'Parcial',
+          not_implemented: 'Não Implementado'
         }
       },
       moduleDescription: {
@@ -180,6 +233,7 @@ const resources = {
     },
     isms: {
       title: 'Information Security Management System',
+      description: 'Manage policies, controls and domains to ensure organizational compliance and security.',
       overview: 'Overview',
       policies: 'Policies',
       procedures: 'Procedures',
@@ -190,6 +244,7 @@ const resources = {
       incidents: 'Incidents',
       training: 'Training',
       documentation: 'Documentation',
+      comingSoon: 'Coming soon...',
       navigation: {
         sections: {
           governance: 'Governance',
@@ -207,6 +262,57 @@ const resources = {
           assessments: 'n.Assessments',
           platform: 'n.Platform',
           tickets: 'n.Tickets'
+        }
+      },
+      sections: {
+        overview: 'Overview',
+        policies: 'Policies',
+        controls: 'Controls',
+        domains: 'Domains',
+        frameworks: 'Frameworks',
+        assessments: 'Assessments',
+        documents: 'Documents'
+      },
+      metrics: {
+        totalPolicies: 'Total Policies',
+        totalControls: 'Total Controls',
+        effectiveness: 'Average Effectiveness',
+        frameworks: 'Mapped Frameworks',
+        domains: 'Registered Domains',
+        complianceScore: 'Compliance Score',
+        policiesActive: 'active policies',
+        controlsImplemented: 'implemented controls',
+        averageEffectiveness: 'average effectiveness',
+        frameworksMapped: 'mapped frameworks',
+        domainsRegistered: 'registered domains',
+        overallCompliance: 'overall compliance'
+      },
+      actions: {
+        createPolicy: 'Create Policy',
+        exportReport: 'Export Report',
+        addControl: 'Add Control',
+        edit: 'Edit',
+        assess: 'Assess',
+        mapFramework: 'Map Framework'
+      },
+      overview: {
+        recentPolicies: 'Recent Policies',
+        controlEffectiveness: 'Control Effectiveness'
+      },
+      policy: {
+        version: 'Version',
+        lastUpdated: 'Last Updated',
+        status: {
+          active: 'Active',
+          draft: 'Draft',
+          review: 'Under Review'
+        }
+      },
+      control: {
+        status: {
+          implemented: 'Implemented',
+          partial: 'Partial',
+          not_implemented: 'Not Implemented'
         }
       },
       moduleDescription: {
@@ -289,6 +395,7 @@ const resources = {
     },
     isms: {
       title: 'Sistema de Gestión de Seguridad de la Información',
+      description: 'Gestione políticas, controles y dominios para garantizar el cumplimiento y la seguridad organizacional.',
       overview: 'Resumen',
       policies: 'Políticas',
       procedures: 'Procedimientos',
@@ -299,6 +406,7 @@ const resources = {
       incidents: 'Incidentes',
       training: 'Capacitación',
       documentation: 'Documentación',
+      comingSoon: 'Próximamente...',
       navigation: {
         sections: {
           governance: 'Gobernanza',
@@ -316,6 +424,57 @@ const resources = {
           assessments: 'n.Assessments',
           platform: 'n.Platform',
           tickets: 'n.Tickets'
+        }
+      },
+      sections: {
+        overview: 'Resumen',
+        policies: 'Políticas',
+        controls: 'Controles',
+        domains: 'Dominios',
+        frameworks: 'Frameworks',
+        assessments: 'Evaluaciones',
+        documents: 'Documentos'
+      },
+      metrics: {
+        totalPolicies: 'Total de Políticas',
+        totalControls: 'Total de Controles',
+        effectiveness: 'Efectividad Promedio',
+        frameworks: 'Frameworks Mapeados',
+        domains: 'Dominios Registrados',
+        complianceScore: 'Puntuación de Cumplimiento',
+        policiesActive: 'políticas activas',
+        controlsImplemented: 'controles implementados',
+        averageEffectiveness: 'efectividad promedio',
+        frameworksMapped: 'frameworks mapeados',
+        domainsRegistered: 'dominios registrados',
+        overallCompliance: 'cumplimiento general'
+      },
+      actions: {
+        createPolicy: 'Crear Política',
+        exportReport: 'Exportar Informe',
+        addControl: 'Agregar Control',
+        edit: 'Editar',
+        assess: 'Evaluar',
+        mapFramework: 'Mapear Framework'
+      },
+      overview: {
+        recentPolicies: 'Políticas Recientes',
+        controlEffectiveness: 'Efectividad de Controles'
+      },
+      policy: {
+        version: 'Versión',
+        lastUpdated: 'Última Actualización',
+        status: {
+          active: 'Activa',
+          draft: 'Borrador',
+          review: 'En Revisión'
+        }
+      },
+      control: {
+        status: {
+          implemented: 'Implementado',
+          partial: 'Parcial',
+          not_implemented: 'No Implementado'
         }
       },
       moduleDescription: {

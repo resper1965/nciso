@@ -112,7 +112,7 @@ export function PolicyModal({ isOpen, onClose, policy, onSubmit, loading }: Poli
 
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  {t('policy.status')}
+                  Status
                 </label>
                 <select
                   value={formData.status}

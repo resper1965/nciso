@@ -166,7 +166,6 @@ const resources = {
         description: 'Descrição',
         category: 'Categoria',
         effectiveness: 'Efetividade',
-        status: 'Status',
         namePlaceholder: 'Digite o nome do controle',
         descriptionPlaceholder: 'Digite uma descrição do controle',
         status: {

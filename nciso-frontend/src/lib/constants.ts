@@ -68,5 +68,5 @@ export const APP_CONFIG = {
 export const I18N_CONFIG = {
   defaultLocale: 'pt-BR',
   locales: ['pt-BR', 'en-US', 'es'],
-  namespaces: ['common', 'auth', 'dashboard', 'policies']
+  namespaces: ['common', 'auth', 'dashboard', 'policies', 'isms']
 } 

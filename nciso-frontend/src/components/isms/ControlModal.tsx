@@ -18,7 +18,7 @@ interface ControlModalProps {
 }
 
 export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: ControlModalProps) {
-  const { t } = useTranslation('isms')
+  const { t } = useTranslation(['isms', 'common'])
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -123,7 +123,7 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
 
             <div>
               <label className="block text-sm font-medium mb-2">
-                {t('control.status')}
+                Status
               </label>
               <select
                 value={formData.status}
@@ -139,11 +139,11 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
 
             <div className="flex justify-end space-x-2 pt-4">
               <Button type="button" variant="outline" onClick={onClose}>
-                {t('common.cancel')}
+                Cancelar
               </Button>
               <Button type="submit" className="bg-[#00ade8] hover:bg-[#0098cc]" disabled={loading}>
                 <Save className="h-4 w-4 mr-2" />
-                {loading ? t('common.saving') : t('common.save')}
+                {loading ? 'Salvando...' : 'Salvar'}
               </Button>
             </div>
           </form>

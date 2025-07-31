@@ -8,6 +8,7 @@ const resources = {
   'pt-BR': {
     common: {
       loading: 'Carregando...',
+      saving: 'Salvando...',
       error: 'Erro',
       success: 'Sucesso',
       cancel: 'Cancelar',
@@ -133,17 +134,31 @@ const resources = {
         assess: 'Avaliar',
         mapFramework: 'Mapear Framework'
       },
+
+      search: {
+        placeholder: 'Buscar políticas, controles...'
+      },
+      filter: {
+        all: 'Todos'
+      },
       overview: {
         recentPolicies: 'Políticas Recentes',
         controlEffectiveness: 'Efetividade dos Controles'
       },
       policy: {
+        title: 'Título',
+        description: 'Descrição',
+        content: 'Conteúdo',
         version: 'Versão',
         lastUpdated: 'Última Atualização',
+        titlePlaceholder: 'Digite o título da política',
+        descriptionPlaceholder: 'Digite uma descrição da política',
+        contentPlaceholder: 'Digite o conteúdo da política...',
         status: {
           active: 'Ativa',
           draft: 'Rascunho',
-          review: 'Em Revisão'
+          review: 'Em Revisão',
+          archived: 'Arquivada'
         }
       },
       control: {
@@ -295,17 +310,36 @@ const resources = {
         assess: 'Assess',
         mapFramework: 'Map Framework'
       },
+      search: {
+        placeholder: 'Search policies, controls...'
+      },
+      filter: {
+        all: 'All statuses'
+      },
+      search: {
+        placeholder: 'Search policies, controls...'
+      },
+      filter: {
+        all: 'All'
+      },
       overview: {
         recentPolicies: 'Recent Policies',
         controlEffectiveness: 'Control Effectiveness'
       },
       policy: {
+        title: 'Title',
+        description: 'Description',
+        content: 'Content',
         version: 'Version',
         lastUpdated: 'Last Updated',
+        titlePlaceholder: 'Enter policy title',
+        descriptionPlaceholder: 'Enter policy description',
+        contentPlaceholder: 'Enter policy content...',
         status: {
           active: 'Active',
           draft: 'Draft',
-          review: 'Under Review'
+          review: 'Under Review',
+          archived: 'Archived'
         }
       },
       control: {
@@ -457,17 +491,36 @@ const resources = {
         assess: 'Evaluar',
         mapFramework: 'Mapear Framework'
       },
+      search: {
+        placeholder: 'Buscar políticas, controles...'
+      },
+      filter: {
+        all: 'Todos los estados'
+      },
+      search: {
+        placeholder: 'Buscar políticas, controles...'
+      },
+      filter: {
+        all: 'Todos'
+      },
       overview: {
         recentPolicies: 'Políticas Recientes',
         controlEffectiveness: 'Efectividad de Controles'
       },
       policy: {
+        title: 'Título',
+        description: 'Descripción',
+        content: 'Contenido',
         version: 'Versión',
         lastUpdated: 'Última Actualización',
+        titlePlaceholder: 'Ingrese el título de la política',
+        descriptionPlaceholder: 'Ingrese la descripción de la política',
+        contentPlaceholder: 'Ingrese el contenido de la política...',
         status: {
           active: 'Activa',
           draft: 'Borrador',
-          review: 'En Revisión'
+          review: 'En Revisión',
+          archived: 'Archivada'
         }
       },
       control: {

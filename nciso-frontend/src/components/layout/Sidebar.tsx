@@ -6,6 +6,7 @@ import { NAV_SECTIONS } from '@/config/navigation'
 import { SidebarItem } from './SidebarItem'
 import { useCurrentModule } from '@/lib/useCurrentModule'
 import { cn } from '@/lib/utils'
+import { Logo } from '@/components/ui/Logo'
 
 interface SidebarProps {
   isCollapsed?: boolean
@@ -23,15 +24,11 @@ export function Sidebar({ isCollapsed = false }: SidebarProps) {
     )}>
       {/* Logo */}
       <div className="flex h-16 items-center px-6 border-b border-slate-700">
-        <div className="flex items-center space-x-2">
-          <div className="h-8 w-8 rounded-lg bg-blue-400 flex items-center justify-center">
-            <span className="text-slate-900 font-bold text-sm">n</span>
-          </div>
+        <div className="flex items-center">
+          <Logo size="md" className="flex-shrink-0" />
           {!isCollapsed && (
-            <div className="flex items-baseline">
-              <span className="text-white font-semibold text-lg">n</span>
-              <span className="text-blue-400 font-semibold text-lg">.</span>
-              <span className="text-white font-semibold text-lg">CISO</span>
+            <div className="ml-3">
+              <Logo size="lg" />
             </div>
           )}
         </div>

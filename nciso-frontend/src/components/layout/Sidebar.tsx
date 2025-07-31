@@ -25,12 +25,7 @@ export function Sidebar({ isCollapsed = false }: SidebarProps) {
       {/* Logo */}
       <div className="flex h-16 items-center px-6 border-b border-slate-700">
         <div className="flex items-center">
-          <Logo size="md" className="flex-shrink-0" />
-          {!isCollapsed && (
-            <div className="ml-3">
-              <Logo size="lg" />
-            </div>
-          )}
+          <Logo size={isCollapsed ? "sm" : "md"} className="flex-shrink-0" />
         </div>
       </div>
 

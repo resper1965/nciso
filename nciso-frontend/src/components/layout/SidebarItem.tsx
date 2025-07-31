@@ -51,9 +51,9 @@ export function SidebarItem({
       )}
       <Icon className={cn("h-5 w-5 flex-shrink-0", !isCollapsed && "mr-3")} />
       {!isCollapsed && (
-        <div className="flex flex-col items-start min-w-0 flex-1">
-          <span className="truncate font-medium">{label}</span>
-          <span className="truncate text-xs text-slate-400">{description}</span>
+        <div className="flex flex-col items-start min-w-0 flex-1 overflow-hidden">
+          <span className="truncate font-medium text-sm">{label}</span>
+          <span className="truncate text-[10px] text-slate-400 leading-tight">{description}</span>
         </div>
       )}
     </button>

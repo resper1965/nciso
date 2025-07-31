@@ -201,19 +201,13 @@ export function usePolicies() {
 
   const createPolicy = async (policy: Omit<Policy, 'id' | 'created_at' | 'updated_at'>) => {
     try {
-      console.log('createPolicy chamado com:', policy)
       const { data, error } = await supabase
         .from('isms_policies')
         .insert([{ ...policy, tenant_id: user?.id }])
         .select()
         .single()
 
-      if (error) {
-        console.error('Erro do Supabase:', error)
-        throw error
-      }
-      
-      console.log('Dados retornados do Supabase:', data)
+      if (error) throw error
       
       if (data) {
         // Mapear os dados para o formato correto
@@ -232,15 +226,7 @@ export function usePolicies() {
           tags: data.tags
         }
         
-        console.log('Política mapeada:', mappedPolicy)
-        console.log('Estado anterior:', policies)
-        
-        setPolicies(prev => {
-          const newState = [...prev, mappedPolicy]
-          console.log('Novo estado:', newState)
-          return newState
-        })
-        
+        setPolicies(prev => [...prev, mappedPolicy])
         return mappedPolicy
       }
     } catch (error) {
@@ -315,7 +301,6 @@ export function useControls() {
 
     const fetchControls = async () => {
       try {
-        console.log('fetchControls iniciado')
         setLoading(true)
         
         const { data, error } = await supabase
@@ -324,12 +309,7 @@ export function useControls() {
           .eq('tenant_id', user.id)
           .order('name', { ascending: true })
 
-        if (error) {
-          console.error('Erro ao buscar controles:', error)
-          throw error
-        }
-        
-        console.log('Dados brutos do Supabase (controles):', data)
+        if (error) throw error
         
         const mappedControls = data?.map(c => ({
           id: c.id,
@@ -347,7 +327,6 @@ export function useControls() {
           framework_mappings: c.framework_mappings
         })) || []
         
-        console.log('Controles mapeados:', mappedControls)
         setControls(mappedControls)
       } catch (error) {
         console.error('Erro ao buscar controles:', error)
@@ -361,19 +340,13 @@ export function useControls() {
 
   const createControl = async (control: Omit<Control, 'id' | 'created_at' | 'updated_at'>) => {
     try {
-      console.log('createControl chamado com:', control)
       const { data, error } = await supabase
         .from('isms_controls')
         .insert([{ ...control, tenant_id: user?.id }])
         .select()
         .single()
 
-      if (error) {
-        console.error('Erro do Supabase:', error)
-        throw error
-      }
-      
-      console.log('Dados retornados do Supabase:', data)
+      if (error) throw error
       
       if (data) {
         // Mapear os dados para o formato correto
@@ -393,15 +366,7 @@ export function useControls() {
           framework_mappings: data.framework_mappings
         }
         
-        console.log('Controle mapeado:', mappedControl)
-        console.log('Estado anterior de controles:', controls)
-        
-        setControls(prev => {
-          const newState = [...prev, mappedControl]
-          console.log('Novo estado de controles:', newState)
-          return newState
-        })
-        
+        setControls(prev => [...prev, mappedControl])
         return mappedControl
       }
     } catch (error) {
@@ -412,7 +377,6 @@ export function useControls() {
 
   const updateControl = async (id: string, updates: Partial<Control>) => {
     try {
-      console.log('updateControl chamado com id:', id, 'e updates:', updates)
       const { data, error } = await supabase
         .from('isms_controls')
         .update(updates)
@@ -420,12 +384,7 @@ export function useControls() {
         .select()
         .single()
 
-      if (error) {
-        console.error('Erro do Supabase:', error)
-        throw error
-      }
-      
-      console.log('Dados retornados do Supabase:', data)
+      if (error) throw error
       
       if (data) {
         // Mapear os dados para o formato correto
@@ -445,11 +404,8 @@ export function useControls() {
           framework_mappings: data.framework_mappings
         }
         
-        console.log('Controle mapeado:', mappedControl)
-        
         setControls(prev => {
           const newState = prev.map(c => c.id === id ? mappedControl : c)
-          console.log('Novo estado de controles:', newState)
           return newState
         })
         

@@ -99,6 +99,18 @@ const resources = {
           platform: 'n.Platform',
           tickets: 'n.Tickets'
         }
+      },
+      moduleDescription: {
+        isms: 'Sistema de Gestão da Segurança da Informação',
+        controls: 'Catálogo centralizado de controles de segurança',
+        audit: 'Sistema de auditoria e conformidade',
+        risk: 'Gestão de riscos de segurança',
+        privacy: 'Proteção de dados e privacidade',
+        cirt: 'Centro de Incidentes e Resposta',
+        secdevops: 'Segurança em desenvolvimento e operações',
+        assessments: 'Avaliações de segurança',
+        platform: 'Plataforma e infraestrutura',
+        tickets: 'Sistema de tickets e suporte'
       }
     }
   },
@@ -196,6 +208,18 @@ const resources = {
           platform: 'n.Platform',
           tickets: 'n.Tickets'
         }
+      },
+      moduleDescription: {
+        isms: 'Information Security Management System',
+        controls: 'Centralized security controls catalog',
+        audit: 'Audit and compliance system',
+        risk: 'Security risk management',
+        privacy: 'Data protection and privacy',
+        cirt: 'Incident Response Center',
+        secdevops: 'Security in development and operations',
+        assessments: 'Security assessments',
+        platform: 'Platform and infrastructure',
+        tickets: 'Ticket and support system'
       }
     }
   },
@@ -293,6 +317,18 @@ const resources = {
           platform: 'n.Platform',
           tickets: 'n.Tickets'
         }
+      },
+      moduleDescription: {
+        isms: 'Sistema de Gestión de Seguridad de la Información',
+        controls: 'Catálogo centralizado de controles de seguridad',
+        audit: 'Sistema de auditoría y cumplimiento',
+        risk: 'Gestión de riesgos de seguridad',
+        privacy: 'Protección de datos y privacidad',
+        cirt: 'Centro de Respuesta a Incidentes',
+        secdevops: 'Seguridad en desarrollo y operaciones',
+        assessments: 'Evaluaciones de seguridad',
+        platform: 'Plataforma e infraestructura',
+        tickets: 'Sistema de tickets y soporte'
       }
     }
   }

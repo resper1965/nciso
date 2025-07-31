@@ -1,8 +1,10 @@
 'use client'
 
 import { Bell } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
 import { UserMenu } from './UserMenu'
+import { LanguageSelector } from '@/components/ui/LanguageSelector'
+import { useCurrentModule } from '@/lib/useCurrentModule'
 import { cn } from '@/lib/utils'
 
 interface HeaderProps {
@@ -10,32 +12,16 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuToggle }: HeaderProps) {
-  const pathname = usePathname()
-
-  const getPageTitle = () => {
-    const path = pathname.split('/')[1] || 'dashboard'
-    const titles: Record<string, string> = {
-      dashboard: 'Dashboard',
-      isms: 'n.ISMS',
-      controls: 'n.Controls',
-      audit: 'n.Audit',
-      risk: 'n.Risk',
-      privacy: 'n.Privacy',
-      cirt: 'n.CIRT',
-      secdevops: 'n.SecDevOps',
-      assessments: 'n.Assessments',
-      platform: 'n.Platform',
-      tickets: 'n.Tickets'
-    }
-    return titles[path] || 'Dashboard'
-  }
+  const { t } = useTranslation('isms')
+  const currentModule = useCurrentModule()
 
   return (
-    <header className="h-16 bg-slate-900 border-b border-slate-700">
-      <div className="flex h-full items-center justify-between px-6">
+    <header className="bg-slate-900 border-b border-slate-700">
+      {/* Main Header */}
+      <div className="flex h-16 items-center justify-between px-6">
         <div className="flex items-center space-x-4">
           <h1 className="text-lg font-semibold text-white">
-            {getPageTitle()}
+            {currentModule.name}
           </h1>
         </div>
         
@@ -47,8 +33,16 @@ export function Header({ onMenuToggle }: HeaderProps) {
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500"></span>
           </button>
+          <LanguageSelector />
           <UserMenu />
         </div>
+      </div>
+
+      {/* Module Description */}
+      <div className="px-6 py-2 bg-slate-800 border-b border-slate-700">
+        <p className="text-sm text-slate-300">
+          {t(`moduleDescription.${currentModule.id}`, currentModule.description)}
+        </p>
       </div>
     </header>
   )

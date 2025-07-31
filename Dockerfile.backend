@@ -9,7 +9,7 @@ RUN apk add --no-cache dumb-init
 # Copiar package.json e package-lock.json
 COPY package*.json ./
 
-# Instalar todas as dependências (incluindo devDependencies para build)
+# Instalar todas as dependências
 RUN npm ci
 
 # Copiar código fonte
@@ -17,6 +17,9 @@ COPY . .
 
 # Criar diretório de logs
 RUN mkdir -p logs
+
+# Verificar se o script existe
+RUN ls -la scripts/start-backend.js
 
 # Expor porta
 EXPOSE 3000

@@ -1,15 +1,27 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/lib/supabase'
 import { MCPTable } from '@/components/ui/mcp-table'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Shield, Users, FileText, AlertTriangle, TrendingUp } from 'lucide-react'
+import { Shield, FileText, AlertTriangle, TrendingUp } from 'lucide-react'
+
+// Tipos para as políticas
+interface Policy {
+  id: string
+  title: string
+  description: string
+  status: 'active' | 'draft' | 'inactive'
+  version: string
+  createdBy: string
+  createdAt: string
+  updatedAt: string
+}
 
 // Dados mockados para demonstração
-const mockPolicies = [
+const mockPolicies: Policy[] = [
   {
     id: '1',
     title: 'Política de Senhas',
@@ -45,8 +57,7 @@ const mockPolicies = [
 export default function DashboardPage() {
   const { t } = useTranslation()
   const { user, signOut } = useAuth()
-  const [policies, setPolicies] = useState(mockPolicies)
-  const [loading, setLoading] = useState(false)
+  const [policies] = useState<Policy[]>(mockPolicies)
 
   const columns = [
     {
@@ -98,12 +109,12 @@ export default function DashboardPage() {
     console.log('Add policy')
   }
 
-  const handleEdit = (row: any) => {
+  const handleEdit = (row: Policy) => {
     // Implementar edição
     console.log('Edit policy:', row)
   }
 
-  const handleDelete = (row: any) => {
+  const handleDelete = (row: Policy) => {
     // Implementar exclusão
     console.log('Delete policy:', row)
   }
@@ -244,7 +255,7 @@ export default function DashboardPage() {
           title={t('policies.title')}
           data={policies}
           columns={columns}
-          loading={loading}
+          loading={false} // Removed loading state as it's not used in mock data
           onSearch={handleSearch}
           onAdd={handleAdd}
           onEdit={handleEdit}

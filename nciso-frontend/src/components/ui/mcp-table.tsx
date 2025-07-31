@@ -5,22 +5,27 @@ import { useTranslation } from 'react-i18next'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Search, Plus, Filter, Download, MoreHorizontal } from 'lucide-react'
+import { Search, Plus, Download } from 'lucide-react'
+
+// Tipo genérico para dados da tabela
+interface TableRow {
+  [key: string]: string | number | boolean | null | undefined
+}
 
 interface MCPTableProps {
   title: string
-  data: any[]
+  data: TableRow[]
   columns: {
     key: string
     label: string
     sortable?: boolean
-    render?: (value: any, row: any) => React.ReactNode
+    render?: (value: string | number | boolean | null | undefined, row: TableRow) => React.ReactNode
   }[]
   loading?: boolean
   onSearch?: (query: string) => void
   onAdd?: () => void
-  onEdit?: (row: any) => void
-  onDelete?: (row: any) => void
+  onEdit?: (row: TableRow) => void
+  onDelete?: (row: TableRow) => void
   onExport?: () => void
 }
 

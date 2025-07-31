@@ -1,6 +1,32 @@
 import { QueryClient } from '@tanstack/react-query'
 import { APP_CONFIG } from './constants'
 
+// Tipos para as políticas
+interface Policy {
+  id: string
+  title: string
+  description: string
+  status: 'active' | 'draft' | 'inactive'
+  version: string
+  createdBy: string
+  createdAt: string
+  updatedAt: string
+}
+
+interface CreatePolicyData {
+  title: string
+  description: string
+  status: 'active' | 'draft' | 'inactive'
+  version: string
+}
+
+interface UpdatePolicyData {
+  title?: string
+  description?: string
+  status?: 'active' | 'draft' | 'inactive'
+  version?: string
+}
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -39,16 +65,16 @@ export const apiClient = {
   
   // Políticas
   policies: {
-    list: () => this.request('/v1/isms/policies'),
-    create: (data: any) => this.request('/v1/isms/policies', {
+    list: () => this.request<Policy[]>('/v1/isms/policies'),
+    create: (data: CreatePolicyData) => this.request<Policy>('/v1/isms/policies', {
       method: 'POST',
       body: JSON.stringify(data)
     }),
-    update: (id: string, data: any) => this.request(`/v1/isms/policies/${id}`, {
+    update: (id: string, data: UpdatePolicyData) => this.request<Policy>(`/v1/isms/policies/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data)
     }),
-    delete: (id: string) => this.request(`/v1/isms/policies/${id}`, {
+    delete: (id: string) => this.request<void>(`/v1/isms/policies/${id}`, {
       method: 'DELETE'
     })
   }

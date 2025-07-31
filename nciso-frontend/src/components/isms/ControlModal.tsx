@@ -62,14 +62,14 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <Card className="w-full max-w-2xl mx-4">
+      <Card className="w-full max-w-2xl mx-4 bg-slate-800 border-slate-700">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center">
-              <Shield className="h-5 w-5 mr-2 text-[#00ade8]" />
+            <CardTitle className="flex items-center text-white">
+              <Shield className="h-5 w-5 mr-2 text-green-400" />
               {control ? t('actions.edit') : t('actions.addControl')}
             </CardTitle>
-            <Button variant="ghost" size="sm" onClick={onClose}>
+            <Button variant="ghost" size="sm" onClick={onClose} className="text-slate-400 hover:text-white">
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -77,7 +77,7 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">
+              <label className="block text-sm font-medium mb-2 text-white">
                 {t('control.name')}
               </label>
               <Input
@@ -85,11 +85,12 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                 placeholder={t('control.namePlaceholder')}
                 required
+                className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">
+              <label className="block text-sm font-medium mb-2 text-white">
                 {t('control.description')}
               </label>
               <Textarea
@@ -97,23 +98,25 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
                 onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                 placeholder={t('control.descriptionPlaceholder')}
                 rows={3}
+                className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-2 text-white">
                   {t('control.category')}
                 </label>
                 <Input
                   value={formData.category}
                   onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
                   placeholder="Access Control"
+                  className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-2 text-white">
                   {t('control.effectiveness')} (%)
                 </label>
                 <Input
@@ -122,18 +125,19 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
                   max="100"
                   value={formData.effectiveness}
                   onChange={(e) => setFormData(prev => ({ ...prev, effectiveness: parseInt(e.target.value) || 0 }))}
+                  className="bg-slate-700 border-slate-600 text-white placeholder-slate-400"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">
+              <label className="block text-sm font-medium mb-2 text-white">
                 Status
               </label>
               <select
                 value={formData.status}
                 onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as any }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600"
+                className="w-full px-3 py-2 border border-slate-600 rounded-md bg-slate-700 text-white"
               >
                 <option value="not_implemented">{t('control.status.not_implemented')}</option>
                 <option value="partial">{t('control.status.partial')}</option>
@@ -143,7 +147,7 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">
+              <label className="block text-sm font-medium mb-2 text-white">
                 Data da Última Avaliação
               </label>
               <Input
@@ -153,14 +157,15 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
                   ...prev, 
                   lastAssessment: e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString()
                 }))}
+                className="bg-slate-700 border-slate-600 text-white"
               />
             </div>
 
             <div className="flex justify-end space-x-2 pt-4">
-              <Button type="button" variant="outline" onClick={onClose}>
+              <Button type="button" variant="outline" onClick={onClose} className="border-slate-600 text-slate-400 hover:text-white">
                 Cancelar
               </Button>
-              <Button type="submit" className="bg-[#00ade8] hover:bg-[#0098cc]" disabled={loading}>
+              <Button type="submit" className="bg-green-400 hover:bg-green-500 text-slate-900" disabled={loading}>
                 <Save className="h-4 w-4 mr-2" />
                 {loading ? 'Salvando...' : 'Salvar'}
               </Button>

@@ -16,7 +16,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
 
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex min-h-screen bg-slate-900">
       {/* Desktop Sidebar */}
       <aside className={cn(
         "hidden md:block bg-slate-900 border-r border-slate-700 flex-shrink-0 transition-all duration-300 ease-in-out",

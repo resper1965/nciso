@@ -47,13 +47,13 @@ export function SidebarItem({
       title={isCollapsed ? label : undefined}
     >
       {isCurrentActive && !isCollapsed && (
-        <div className="absolute left-0 top-1/2 h-2 w-1 -translate-y-1/2 rounded-r-full bg-[#00ade8]" />
+        <div className="absolute left-0 top-1/2 h-2 w-1 -translate-y-1/2 rounded-r-full bg-blue-400" />
       )}
       <Icon className={cn("h-5 w-5 flex-shrink-0", !isCollapsed && "mr-3")} />
       {!isCollapsed && (
         <div className="flex flex-col items-start min-w-0 flex-1">
           <span className="truncate font-medium">{label}</span>
-          <span className="truncate text-xs text-slate-500 dark:text-slate-400">{description}</span>
+          <span className="truncate text-xs text-slate-400">{description}</span>
         </div>
       )}
     </button>

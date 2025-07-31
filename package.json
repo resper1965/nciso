@@ -4,9 +4,10 @@
   "description": "Plataforma de Gestão de Segurança da Informação",
   "main": "src/api/index.js",
   "scripts": {
-    "dev": "nodemon src/api/index.js",
-    "start": "node src/api/index.js",
+    "dev": "nodemon scripts/start-backend.js",
+    "start": "node scripts/start-backend.js",
     "test": "jest",
+    "test:backend": "node scripts/test-backend.js",
     "lint": "eslint src/",
     "format": "prettier --write src/",
     "build": "webpack --mode production",

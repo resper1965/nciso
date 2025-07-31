@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/supabase'
 import { MCPTable } from '@/components/ui/mcp-table'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { AppLayout } from '@/components/layout/AppLayout'
 import { Shield, FileText, AlertTriangle, TrendingUp } from 'lucide-react'
 
 // Tipos para as políticas
@@ -139,32 +140,8 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-950 shadow-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
-              <Shield className="h-8 w-8 text-primary-500" />
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                n.CISO
-              </h1>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                {user.email}
-              </span>
-              <Button variant="outline" size="sm" onClick={signOut}>
-                {t('auth.logout')}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <AppLayout>
+      <div className="space-y-6">
         {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -262,7 +239,7 @@ export default function DashboardPage() {
           onDelete={handleDelete}
           onExport={handleExport}
         />
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   )
 } 

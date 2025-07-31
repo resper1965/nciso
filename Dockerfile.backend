@@ -25,4 +25,4 @@ EXPOSE 3000
 ENTRYPOINT ["dumb-init", "--"]
 
 # Comando para iniciar a aplicação
-CMD ["node", "src/api/index.js"] 
+CMD ["node", "scripts/start-backend.js"] 

@@ -68,6 +68,38 @@ const resources = {
         createdAt: 'Criado em',
         updatedAt: 'Atualizado em'
       }
+    },
+    isms: {
+      title: 'Sistema de Gestão de Segurança da Informação',
+      overview: 'Visão Geral',
+      policies: 'Políticas',
+      procedures: 'Procedimentos',
+      controls: 'Controles',
+      risks: 'Riscos',
+      audits: 'Auditorias',
+      compliance: 'Conformidade',
+      incidents: 'Incidentes',
+      training: 'Treinamento',
+      documentation: 'Documentação',
+      navigation: {
+        sections: {
+          governance: 'Governança',
+          monitoring: 'Monitoramento',
+          internal: 'Internos'
+        },
+        items: {
+          isms: 'n.ISMS',
+          controls: 'n.Controls',
+          audit: 'n.Audit',
+          risk: 'n.Risk',
+          privacy: 'n.Privacy',
+          cirt: 'n.CIRT',
+          secdevops: 'n.SecDevOps',
+          assessments: 'n.Assessments',
+          platform: 'n.Platform',
+          tickets: 'n.Tickets'
+        }
+      }
     }
   },
   'en-US': {
@@ -133,6 +165,38 @@ const resources = {
         createdAt: 'Created at',
         updatedAt: 'Updated at'
       }
+    },
+    isms: {
+      title: 'Information Security Management System',
+      overview: 'Overview',
+      policies: 'Policies',
+      procedures: 'Procedures',
+      controls: 'Controls',
+      risks: 'Risks',
+      audits: 'Audits',
+      compliance: 'Compliance',
+      incidents: 'Incidents',
+      training: 'Training',
+      documentation: 'Documentation',
+      navigation: {
+        sections: {
+          governance: 'Governance',
+          monitoring: 'Monitoring',
+          internal: 'Internal'
+        },
+        items: {
+          isms: 'n.ISMS',
+          controls: 'n.Controls',
+          audit: 'n.Audit',
+          risk: 'n.Risk',
+          privacy: 'n.Privacy',
+          cirt: 'n.CIRT',
+          secdevops: 'n.SecDevOps',
+          assessments: 'n.Assessments',
+          platform: 'n.Platform',
+          tickets: 'n.Tickets'
+        }
+      }
     }
   },
   'es': {
@@ -197,6 +261,38 @@ const resources = {
         createdBy: 'Creado por',
         createdAt: 'Creado en',
         updatedAt: 'Actualizado en'
+      }
+    },
+    isms: {
+      title: 'Sistema de Gestión de Seguridad de la Información',
+      overview: 'Resumen',
+      policies: 'Políticas',
+      procedures: 'Procedimientos',
+      controls: 'Controles',
+      risks: 'Riesgos',
+      audits: 'Auditorías',
+      compliance: 'Cumplimiento',
+      incidents: 'Incidentes',
+      training: 'Capacitación',
+      documentation: 'Documentación',
+      navigation: {
+        sections: {
+          governance: 'Gobernanza',
+          monitoring: 'Monitoreo',
+          internal: 'Internos'
+        },
+        items: {
+          isms: 'n.ISMS',
+          controls: 'n.Controls',
+          audit: 'n.Audit',
+          risk: 'n.Risk',
+          privacy: 'n.Privacy',
+          cirt: 'n.CIRT',
+          secdevops: 'n.SecDevOps',
+          assessments: 'n.Assessments',
+          platform: 'n.Platform',
+          tickets: 'n.Tickets'
+        }
       }
     }
   }

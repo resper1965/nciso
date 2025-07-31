@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '@/lib/supabase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,13 +20,15 @@ interface PolicyModalProps {
 
 export function PolicyModal({ isOpen, onClose, policy, onSubmit, loading }: PolicyModalProps) {
   const { t } = useTranslation(['isms', 'common'])
+  const { user } = useAuth()
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     content: '',
     status: 'draft' as const,
     version: '1.0',
-    tags: [] as string[]
+    tags: [] as string[],
+    owner: ''
   })
 
   useEffect(() => {
@@ -36,7 +39,8 @@ export function PolicyModal({ isOpen, onClose, policy, onSubmit, loading }: Poli
         content: policy.content || '',
         status: policy.status,
         version: policy.version,
-        tags: policy.tags || []
+        tags: policy.tags || [],
+        owner: policy.owner || ''
       })
     } else {
       setFormData({
@@ -45,10 +49,11 @@ export function PolicyModal({ isOpen, onClose, policy, onSubmit, loading }: Poli
         content: '',
         status: 'draft',
         version: '1.0',
-        tags: []
+        tags: [],
+        owner: user?.name || user?.email || 'CISO'
       })
     }
-  }, [policy])
+  }, [policy, user])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -95,6 +100,17 @@ export function PolicyModal({ isOpen, onClose, policy, onSubmit, loading }: Poli
                 onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                 placeholder={t('policy.descriptionPlaceholder')}
                 rows={3}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Proprietário
+              </label>
+              <Input
+                value={formData.owner}
+                onChange={(e) => setFormData(prev => ({ ...prev, owner: e.target.value }))}
+                placeholder="Nome do proprietário"
               />
             </div>
 

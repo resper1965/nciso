@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '@/lib/supabase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -19,12 +20,14 @@ interface ControlModalProps {
 
 export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: ControlModalProps) {
   const { t } = useTranslation(['isms', 'common'])
+  const { user } = useAuth()
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     category: '',
     effectiveness: 0,
-    status: 'not_implemented' as const
+    status: 'not_implemented' as const,
+    lastAssessment: new Date().toISOString()
   })
 
   useEffect(() => {
@@ -34,7 +37,8 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
         description: control.description || '',
         category: control.category || '',
         effectiveness: control.effectiveness || 0,
-        status: control.status
+        status: control.status,
+        lastAssessment: control.lastAssessment || new Date().toISOString()
       })
     } else {
       setFormData({
@@ -42,7 +46,8 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
         description: '',
         category: '',
         effectiveness: 0,
-        status: 'not_implemented'
+        status: 'not_implemented',
+        lastAssessment: new Date().toISOString()
       })
     }
   }, [control])
@@ -135,6 +140,20 @@ export function ControlModal({ isOpen, onClose, control, onSubmit, loading }: Co
                 <option value="implemented">{t('control.status.implemented')}</option>
                 <option value="planned">{t('control.status.planned')}</option>
               </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Data da Última Avaliação
+              </label>
+              <Input
+                type="datetime-local"
+                value={formData.lastAssessment ? new Date(formData.lastAssessment).toISOString().slice(0, 16) : ''}
+                onChange={(e) => setFormData(prev => ({ 
+                  ...prev, 
+                  lastAssessment: e.target.value ? new Date(e.target.value).toISOString() : new Date().toISOString()
+                }))}
+              />
             </div>
 
             <div className="flex justify-end space-x-2 pt-4">

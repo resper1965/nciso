@@ -156,6 +156,7 @@ export function usePolicies() {
 
     const fetchPolicies = async () => {
       try {
+        console.log('fetchPolicies iniciado')
         setLoading(true)
         
         const { data, error } = await supabase
@@ -164,9 +165,14 @@ export function usePolicies() {
           .eq('tenant_id', user.id)
           .order('updated_at', { ascending: false })
 
-        if (error) throw error
+        if (error) {
+          console.error('Erro ao buscar políticas:', error)
+          throw error
+        }
         
-        setPolicies(data?.map(p => ({
+        console.log('Dados brutos do Supabase:', data)
+        
+        const mappedPolicies = data?.map(p => ({
           id: p.id,
           title: p.title,
           description: p.description,
@@ -179,7 +185,10 @@ export function usePolicies() {
           updated_at: p.updated_at,
           content: p.content,
           tags: p.tags
-        })) || [])
+        })) || []
+        
+        console.log('Políticas mapeadas:', mappedPolicies)
+        setPolicies(mappedPolicies)
       } catch (error) {
         console.error('Erro ao buscar políticas:', error)
       } finally {
@@ -192,17 +201,47 @@ export function usePolicies() {
 
   const createPolicy = async (policy: Omit<Policy, 'id' | 'created_at' | 'updated_at'>) => {
     try {
+      console.log('createPolicy chamado com:', policy)
       const { data, error } = await supabase
         .from('isms_policies')
         .insert([{ ...policy, tenant_id: user?.id }])
         .select()
         .single()
 
-      if (error) throw error
+      if (error) {
+        console.error('Erro do Supabase:', error)
+        throw error
+      }
+      
+      console.log('Dados retornados do Supabase:', data)
       
       if (data) {
-        setPolicies(prev => [...prev, data])
-        return data
+        // Mapear os dados para o formato correto
+        const mappedPolicy = {
+          id: data.id,
+          title: data.title,
+          description: data.description,
+          status: data.status,
+          version: data.version,
+          lastUpdated: data.updated_at,
+          owner: data.owner,
+          tenant_id: data.tenant_id,
+          created_at: data.created_at,
+          updated_at: data.updated_at,
+          content: data.content,
+          tags: data.tags
+        }
+        
+        console.log('Política mapeada:', mappedPolicy)
+        console.log('Estado anterior:', policies)
+        
+        setPolicies(prev => {
+          const newState = [...prev, mappedPolicy]
+          console.log('Novo estado:', newState)
+          return newState
+        })
+        
+        return mappedPolicy
       }
     } catch (error) {
       console.error('Erro ao criar política:', error)
@@ -222,8 +261,24 @@ export function usePolicies() {
       if (error) throw error
       
       if (data) {
-        setPolicies(prev => prev.map(p => p.id === id ? data : p))
-        return data
+        // Mapear os dados para o formato correto
+        const mappedPolicy = {
+          id: data.id,
+          title: data.title,
+          description: data.description,
+          status: data.status,
+          version: data.version,
+          lastUpdated: data.updated_at,
+          owner: data.owner,
+          tenant_id: data.tenant_id,
+          created_at: data.created_at,
+          updated_at: data.updated_at,
+          content: data.content,
+          tags: data.tags
+        }
+        
+        setPolicies(prev => prev.map(p => p.id === id ? mappedPolicy : p))
+        return mappedPolicy
       }
     } catch (error) {
       console.error('Erro ao atualizar política:', error)
@@ -260,6 +315,7 @@ export function useControls() {
 
     const fetchControls = async () => {
       try {
+        console.log('fetchControls iniciado')
         setLoading(true)
         
         const { data, error } = await supabase
@@ -268,9 +324,14 @@ export function useControls() {
           .eq('tenant_id', user.id)
           .order('name', { ascending: true })
 
-        if (error) throw error
+        if (error) {
+          console.error('Erro ao buscar controles:', error)
+          throw error
+        }
         
-        setControls(data?.map(c => ({
+        console.log('Dados brutos do Supabase (controles):', data)
+        
+        const mappedControls = data?.map(c => ({
           id: c.id,
           name: c.name,
           description: c.description,
@@ -284,7 +345,10 @@ export function useControls() {
           policy_ids: c.policy_ids,
           domain_id: c.domain_id,
           framework_mappings: c.framework_mappings
-        })) || [])
+        })) || []
+        
+        console.log('Controles mapeados:', mappedControls)
+        setControls(mappedControls)
       } catch (error) {
         console.error('Erro ao buscar controles:', error)
       } finally {
@@ -297,17 +361,48 @@ export function useControls() {
 
   const createControl = async (control: Omit<Control, 'id' | 'created_at' | 'updated_at'>) => {
     try {
+      console.log('createControl chamado com:', control)
       const { data, error } = await supabase
         .from('isms_controls')
         .insert([{ ...control, tenant_id: user?.id }])
         .select()
         .single()
 
-      if (error) throw error
+      if (error) {
+        console.error('Erro do Supabase:', error)
+        throw error
+      }
+      
+      console.log('Dados retornados do Supabase:', data)
       
       if (data) {
-        setControls(prev => [...prev, data])
-        return data
+        // Mapear os dados para o formato correto
+        const mappedControl = {
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          category: data.category,
+          effectiveness: data.effectiveness || 0,
+          status: data.status,
+          lastAssessment: data.last_assessment,
+          tenant_id: data.tenant_id,
+          created_at: data.created_at,
+          updated_at: data.updated_at,
+          policy_ids: data.policy_ids,
+          domain_id: data.domain_id,
+          framework_mappings: data.framework_mappings
+        }
+        
+        console.log('Controle mapeado:', mappedControl)
+        console.log('Estado anterior de controles:', controls)
+        
+        setControls(prev => {
+          const newState = [...prev, mappedControl]
+          console.log('Novo estado de controles:', newState)
+          return newState
+        })
+        
+        return mappedControl
       }
     } catch (error) {
       console.error('Erro ao criar controle:', error)
@@ -317,6 +412,7 @@ export function useControls() {
 
   const updateControl = async (id: string, updates: Partial<Control>) => {
     try {
+      console.log('updateControl chamado com id:', id, 'e updates:', updates)
       const { data, error } = await supabase
         .from('isms_controls')
         .update(updates)
@@ -324,11 +420,40 @@ export function useControls() {
         .select()
         .single()
 
-      if (error) throw error
+      if (error) {
+        console.error('Erro do Supabase:', error)
+        throw error
+      }
+      
+      console.log('Dados retornados do Supabase:', data)
       
       if (data) {
-        setControls(prev => prev.map(c => c.id === id ? data : c))
-        return data
+        // Mapear os dados para o formato correto
+        const mappedControl = {
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          category: data.category,
+          effectiveness: data.effectiveness || 0,
+          status: data.status,
+          lastAssessment: data.last_assessment,
+          tenant_id: data.tenant_id,
+          created_at: data.created_at,
+          updated_at: data.updated_at,
+          policy_ids: data.policy_ids,
+          domain_id: data.domain_id,
+          framework_mappings: data.framework_mappings
+        }
+        
+        console.log('Controle mapeado:', mappedControl)
+        
+        setControls(prev => {
+          const newState = prev.map(c => c.id === id ? mappedControl : c)
+          console.log('Novo estado de controles:', newState)
+          return newState
+        })
+        
+        return mappedControl
       }
     } catch (error) {
       console.error('Erro ao atualizar controle:', error)

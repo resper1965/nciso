@@ -19,7 +19,7 @@ export function Sidebar({ isCollapsed = false }: SidebarProps) {
   return (
     <div className={cn(
       "flex h-full flex-col bg-slate-900 border-r border-slate-700 transition-all duration-300 ease-in-out",
-      isCollapsed ? "w-20" : "w-80"
+      isCollapsed ? "w-20" : "w-64"
     )}>
       {/* Logo */}
       <div className="flex h-16 items-center px-6 border-b border-slate-700">
@@ -64,27 +64,6 @@ export function Sidebar({ isCollapsed = false }: SidebarProps) {
           ))}
         </div>
       </nav>
-
-      {/* User Footer */}
-      {user && !isCollapsed && (
-        <div className="border-t border-slate-700 p-6">
-          <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-[#00ade8] flex items-center justify-center">
-              <span className="text-white font-semibold text-sm">
-                {user.email?.charAt(0).toUpperCase()}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">
-                {user.email}
-              </p>
-              <p className="text-xs text-slate-400">
-                Chief Information Security Officer
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 } 

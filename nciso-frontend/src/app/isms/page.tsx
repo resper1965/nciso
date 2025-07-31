@@ -120,11 +120,16 @@ export default function ISMSPage() {
 
   const handlePolicySubmit = async (policy: Omit<Policy, 'id' | 'created_at' | 'updated_at'>) => {
     try {
+      console.log('Salvando política:', policy)
       setModalLoading(true)
       if (selectedPolicy) {
-        await updatePolicy(selectedPolicy.id, policy)
+        console.log('Atualizando política existente:', selectedPolicy.id)
+        const result = await updatePolicy(selectedPolicy.id, policy)
+        console.log('Política atualizada:', result)
       } else {
-        await createPolicy(policy)
+        console.log('Criando nova política')
+        const result = await createPolicy(policy)
+        console.log('Política criada:', result)
       }
       setShowPolicyModal(false)
     } catch (error) {
@@ -136,11 +141,16 @@ export default function ISMSPage() {
 
   const handleControlSubmit = async (control: Omit<Control, 'id' | 'created_at' | 'updated_at'>) => {
     try {
+      console.log('Salvando controle:', control)
       setModalLoading(true)
       if (selectedControl) {
-        await updateControl(selectedControl.id, control)
+        console.log('Atualizando controle existente:', selectedControl.id)
+        const result = await updateControl(selectedControl.id, control)
+        console.log('Controle atualizado:', result)
       } else {
-        await createControl(control)
+        console.log('Criando novo controle')
+        const result = await createControl(control)
+        console.log('Controle criado:', result)
       }
       setShowControlModal(false)
     } catch (error) {
@@ -184,98 +194,147 @@ export default function ISMSPage() {
           </div>
         </div>
 
-        {/* Metrics Cards */}
+        {/* Bento Grid */}
         {metricsLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <Card key={i}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[...Array(8)].map((_, i) => (
+              <Card key={i} className="animate-pulse">
                 <CardContent className="p-6">
-                  <div className="animate-pulse">
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                    <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-                  </div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-8 bg-gray-200 rounded w-1/2"></div>
                 </CardContent>
               </Card>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-fr">
+            {/* Políticas - Card Grande */}
+            <Card className="lg:col-span-2 lg:row-span-2 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-800">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{t('metrics.totalPolicies')}</CardTitle>
-                <FileText className="h-4 w-4 text-[#00ade8]" />
+                <CardTitle className="text-lg font-semibold text-blue-900 dark:text-blue-100">
+                  {t('metrics.totalPolicies')}
+                </CardTitle>
+                <div className="h-12 w-12 rounded-lg bg-blue-500 flex items-center justify-center">
+                  <FileText className="h-6 w-6 text-white" />
+                </div>
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.totalPolicies || 0}</div>
-                <p className="text-xs text-muted-foreground">
+              <CardContent className="space-y-4">
+                <div className="text-4xl font-bold text-blue-900 dark:text-blue-100">
+                  {metrics?.totalPolicies || 0}
+                </div>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
                   {t('metrics.policiesActive')}
                 </p>
+                <div className="flex items-center space-x-2">
+                  <div className="flex-1 bg-blue-200 dark:bg-blue-800 rounded-full h-2">
+                    <div 
+                      className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min((metrics?.totalPolicies || 0) * 10, 100)}%` }}
+                    ></div>
+                  </div>
+                  <span className="text-xs text-blue-600 dark:text-blue-400">
+                    {Math.min((metrics?.totalPolicies || 0) * 10, 100)}%
+                  </span>
+                </div>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Controles - Card Médio */}
+            <Card className="lg:col-span-2 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200 dark:border-green-800">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{t('metrics.totalControls')}</CardTitle>
-                <Shield className="h-4 w-4 text-[#00ade8]" />
+                <CardTitle className="text-lg font-semibold text-green-900 dark:text-green-100">
+                  {t('metrics.totalControls')}
+                </CardTitle>
+                <div className="h-10 w-10 rounded-lg bg-green-500 flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-white" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{metrics?.totalControls || 0}</div>
-                <p className="text-xs text-muted-foreground">
+                <div className="text-3xl font-bold text-green-900 dark:text-green-100">
+                  {metrics?.totalControls || 0}
+                </div>
+                <p className="text-sm text-green-700 dark:text-green-300">
                   {t('metrics.controlsImplemented')}
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Efetividade - Card Médio */}
+            <Card className="lg:col-span-2 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-purple-200 dark:border-purple-800">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{t('metrics.effectiveness')}</CardTitle>
-                <TrendingUp className="h-4 w-4 text-[#00ade8]" />
+                <CardTitle className="text-lg font-semibold text-purple-900 dark:text-purple-100">
+                  {t('metrics.effectiveness')}
+                </CardTitle>
+                <div className="h-10 w-10 rounded-lg bg-purple-500 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-white" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className={`text-2xl font-bold ${getEffectivenessColor(metrics?.effectiveness || 0)}`}>
+                <div className={`text-3xl font-bold ${getEffectivenessColor(metrics?.effectiveness || 0)}`}>
                   {metrics?.effectiveness || 0}%
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-purple-700 dark:text-purple-300">
                   {t('metrics.averageEffectiveness')}
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Frameworks - Card Pequeno */}
+            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-orange-200 dark:border-orange-800">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{t('metrics.frameworks')}</CardTitle>
-                <BookOpen className="h-4 w-4 text-[#00ade8]" />
+                <CardTitle className="text-sm font-medium text-orange-900 dark:text-orange-100">
+                  Frameworks
+                </CardTitle>
+                <div className="h-8 w-8 rounded-lg bg-orange-500 flex items-center justify-center">
+                  <BookOpen className="h-4 w-4 text-white" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{metrics?.frameworks || 0}</div>
-                <p className="text-xs text-muted-foreground">
-                  {t('metrics.frameworksMapped')}
+                <div className="text-2xl font-bold text-orange-900 dark:text-orange-100">
+                  {metrics?.frameworks || 0}
+                </div>
+                <p className="text-xs text-orange-700 dark:text-orange-300">
+                  Ativos
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Domínios - Card Pequeno */}
+            <Card className="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 border-indigo-200 dark:border-indigo-800">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{t('metrics.domains')}</CardTitle>
-                <Target className="h-4 w-4 text-[#00ade8]" />
+                <CardTitle className="text-sm font-medium text-indigo-900 dark:text-indigo-100">
+                  Domínios
+                </CardTitle>
+                <div className="h-8 w-8 rounded-lg bg-indigo-500 flex items-center justify-center">
+                  <Target className="h-4 w-4 text-white" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{metrics?.domains || 0}</div>
-                <p className="text-xs text-muted-foreground">
-                  {t('metrics.domainsRegistered')}
+                <div className="text-2xl font-bold text-indigo-900 dark:text-indigo-100">
+                  {metrics?.domains || 0}
+                </div>
+                <p className="text-xs text-indigo-700 dark:text-indigo-300">
+                  Cobertos
                 </p>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Score de Conformidade - Card Médio */}
+            <Card className="lg:col-span-2 bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 border-emerald-200 dark:border-emerald-800">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{t('metrics.complianceScore')}</CardTitle>
-                <CheckCircle className="h-4 w-4 text-[#00ade8]" />
+                <CardTitle className="text-lg font-semibold text-emerald-900 dark:text-emerald-100">
+                  Score de Conformidade
+                </CardTitle>
+                <div className="h-10 w-10 rounded-lg bg-emerald-500 flex items-center justify-center">
+                  <CheckCircle className="h-5 w-5 text-white" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{metrics?.complianceScore || 0}%</div>
-                <p className="text-xs text-muted-foreground">
-                  {t('metrics.overallCompliance')}
+                <div className="text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+                  {metrics?.complianceScore || 0}%
+                </div>
+                <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                  Controles Implementados
                 </p>
               </CardContent>
             </Card>

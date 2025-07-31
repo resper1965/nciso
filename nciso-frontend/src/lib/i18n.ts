@@ -162,10 +162,18 @@ const resources = {
         }
       },
       control: {
+        name: 'Nome',
+        description: 'Descrição',
+        category: 'Categoria',
+        effectiveness: 'Efetividade',
+        status: 'Status',
+        namePlaceholder: 'Digite o nome do controle',
+        descriptionPlaceholder: 'Digite uma descrição do controle',
         status: {
           implemented: 'Implementado',
           partial: 'Parcial',
-          not_implemented: 'Não Implementado'
+          not_implemented: 'Não Implementado',
+          planned: 'Planejado'
         }
       },
       moduleDescription: {

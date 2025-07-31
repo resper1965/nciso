@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/lib/supabase'
-import { useMcpServer } from '@/lib/mcp'
+import { supabase } from '@/lib/supabase'
 
 export interface ISMSMetrics {
   totalPolicies: number
@@ -77,7 +77,6 @@ export interface Assessment {
 
 export function useISMSMetrics() {
   const { user } = useAuth()
-  const { mcpServer } = useMcpServer()
   const [metrics, setMetrics] = useState<ISMSMetrics>({
     totalPolicies: 0,
     totalControls: 0,
@@ -95,23 +94,45 @@ export function useISMSMetrics() {
       try {
         setLoading(true)
         
-        // Buscar métricas via MCP
-        const response = await mcpServer.call('list_resources', {
-          resource: 'isms_metrics',
-          filter: { tenant_id: user.tenant_id }
+        // Buscar contadores
+        const [policiesResult, controlsResult, frameworksResult, domainsResult] = await Promise.all([
+          supabase.from('isms_policies').select('id', { count: 'exact', head: true }).eq('tenant_id', user.id),
+          supabase.from('isms_controls').select('id', { count: 'exact', head: true }).eq('tenant_id', user.id),
+          supabase.from('isms_frameworks').select('id', { count: 'exact', head: true }).eq('tenant_id', user.id),
+          supabase.from('isms_domains').select('id', { count: 'exact', head: true }).eq('tenant_id', user.id)
+        ])
+        
+        // Buscar efetividade média
+        const effectivenessResult = await supabase
+          .from('isms_controls')
+          .select('effectiveness')
+          .eq('tenant_id', user.id)
+          .not('effectiveness', 'is', null)
+        
+        const averageEffectiveness = effectivenessResult.data?.length 
+          ? effectivenessResult.data.reduce((sum, control) => sum + (control.effectiveness || 0), 0) / effectivenessResult.data.length
+          : 0
+        
+        // Calcular score de conformidade (baseado em controles implementados)
+        const complianceControls = await supabase
+          .from('isms_controls')
+          .select('status')
+          .eq('tenant_id', user.id)
+          .eq('status', 'implemented')
+        
+        const totalControls = controlsResult.count || 0
+        const complianceScore = totalControls > 0 
+          ? Math.round(((complianceControls.count || 0) / totalControls) * 100)
+          : 0
+        
+        setMetrics({
+          totalPolicies: policiesResult.count || 0,
+          totalControls: totalControls,
+          effectiveness: Math.round(averageEffectiveness),
+          frameworks: frameworksResult.count || 0,
+          domains: domainsResult.count || 0,
+          complianceScore
         })
-
-        if (response.resources) {
-          const data = response.resources[0] || {}
-          setMetrics({
-            totalPolicies: data.total_policies || 0,
-            totalControls: data.total_controls || 0,
-            effectiveness: data.average_effectiveness || 0,
-            frameworks: data.frameworks_count || 0,
-            domains: data.domains_count || 0,
-            complianceScore: data.compliance_score || 0
-          })
-        }
       } catch (error) {
         console.error('Erro ao buscar métricas ISMS:', error)
       } finally {
@@ -120,14 +141,13 @@ export function useISMSMetrics() {
     }
 
     fetchMetrics()
-  }, [user, mcpServer])
+  }, [user])
 
   return { metrics, loading }
 }
 
 export function usePolicies() {
   const { user } = useAuth()
-  const { mcpServer } = useMcpServer()
   const [policies, setPolicies] = useState<Policy[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -138,27 +158,28 @@ export function usePolicies() {
       try {
         setLoading(true)
         
-        const response = await mcpServer.call('list_resources', {
-          resource: 'isms_policies',
-          filter: { tenant_id: user.tenant_id }
-        })
+        const { data, error } = await supabase
+          .from('isms_policies')
+          .select('*')
+          .eq('tenant_id', user.id)
+          .order('updated_at', { ascending: false })
 
-        if (response.resources) {
-          setPolicies(response.resources.map((p: any) => ({
-            id: p.id,
-            title: p.title,
-            description: p.description,
-            status: p.status,
-            version: p.version,
-            lastUpdated: p.updated_at,
-            owner: p.owner,
-            tenant_id: p.tenant_id,
-            created_at: p.created_at,
-            updated_at: p.updated_at,
-            content: p.content,
-            tags: p.tags
-          })))
-        }
+        if (error) throw error
+        
+        setPolicies(data?.map(p => ({
+          id: p.id,
+          title: p.title,
+          description: p.description,
+          status: p.status,
+          version: p.version,
+          lastUpdated: p.updated_at,
+          owner: p.owner,
+          tenant_id: p.tenant_id,
+          created_at: p.created_at,
+          updated_at: p.updated_at,
+          content: p.content,
+          tags: p.tags
+        })) || [])
       } catch (error) {
         console.error('Erro ao buscar políticas:', error)
       } finally {
@@ -167,21 +188,21 @@ export function usePolicies() {
     }
 
     fetchPolicies()
-  }, [user, mcpServer])
+  }, [user])
 
   const createPolicy = async (policy: Omit<Policy, 'id' | 'created_at' | 'updated_at'>) => {
     try {
-      const response = await mcpServer.call('create_resource', {
-        resource: 'isms_policies',
-        data: {
-          ...policy,
-          tenant_id: user?.tenant_id
-        }
-      })
+      const { data, error } = await supabase
+        .from('isms_policies')
+        .insert([{ ...policy, tenant_id: user?.id }])
+        .select()
+        .single()
+
+      if (error) throw error
       
-      if (response.resource) {
-        setPolicies(prev => [...prev, response.resource])
-        return response.resource
+      if (data) {
+        setPolicies(prev => [...prev, data])
+        return data
       }
     } catch (error) {
       console.error('Erro ao criar política:', error)
@@ -191,15 +212,18 @@ export function usePolicies() {
 
   const updatePolicy = async (id: string, updates: Partial<Policy>) => {
     try {
-      const response = await mcpServer.call('update_resource', {
-        resource: 'isms_policies',
-        id,
-        data: updates
-      })
+      const { data, error } = await supabase
+        .from('isms_policies')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+      if (error) throw error
       
-      if (response.resource) {
-        setPolicies(prev => prev.map(p => p.id === id ? response.resource : p))
-        return response.resource
+      if (data) {
+        setPolicies(prev => prev.map(p => p.id === id ? data : p))
+        return data
       }
     } catch (error) {
       console.error('Erro ao atualizar política:', error)
@@ -209,10 +233,12 @@ export function usePolicies() {
 
   const deletePolicy = async (id: string) => {
     try {
-      await mcpServer.call('delete_resource', {
-        resource: 'isms_policies',
-        id
-      })
+      const { error } = await supabase
+        .from('isms_policies')
+        .delete()
+        .eq('id', id)
+
+      if (error) throw error
       
       setPolicies(prev => prev.filter(p => p.id !== id))
     } catch (error) {
@@ -226,7 +252,6 @@ export function usePolicies() {
 
 export function useControls() {
   const { user } = useAuth()
-  const { mcpServer } = useMcpServer()
   const [controls, setControls] = useState<Control[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -237,28 +262,29 @@ export function useControls() {
       try {
         setLoading(true)
         
-        const response = await mcpServer.call('list_resources', {
-          resource: 'isms_controls',
-          filter: { tenant_id: user.tenant_id }
-        })
+        const { data, error } = await supabase
+          .from('isms_controls')
+          .select('*')
+          .eq('tenant_id', user.id)
+          .order('name', { ascending: true })
 
-        if (response.resources) {
-          setControls(response.resources.map((c: any) => ({
-            id: c.id,
-            name: c.name,
-            description: c.description,
-            category: c.category,
-            effectiveness: c.effectiveness || 0,
-            status: c.status,
-            lastAssessment: c.last_assessment,
-            tenant_id: c.tenant_id,
-            created_at: c.created_at,
-            updated_at: c.updated_at,
-            policy_ids: c.policy_ids,
-            domain_id: c.domain_id,
-            framework_mappings: c.framework_mappings
-          })))
-        }
+        if (error) throw error
+        
+        setControls(data?.map(c => ({
+          id: c.id,
+          name: c.name,
+          description: c.description,
+          category: c.category,
+          effectiveness: c.effectiveness || 0,
+          status: c.status,
+          lastAssessment: c.last_assessment,
+          tenant_id: c.tenant_id,
+          created_at: c.created_at,
+          updated_at: c.updated_at,
+          policy_ids: c.policy_ids,
+          domain_id: c.domain_id,
+          framework_mappings: c.framework_mappings
+        })) || [])
       } catch (error) {
         console.error('Erro ao buscar controles:', error)
       } finally {
@@ -267,21 +293,21 @@ export function useControls() {
     }
 
     fetchControls()
-  }, [user, mcpServer])
+  }, [user])
 
   const createControl = async (control: Omit<Control, 'id' | 'created_at' | 'updated_at'>) => {
     try {
-      const response = await mcpServer.call('create_resource', {
-        resource: 'isms_controls',
-        data: {
-          ...control,
-          tenant_id: user?.tenant_id
-        }
-      })
+      const { data, error } = await supabase
+        .from('isms_controls')
+        .insert([{ ...control, tenant_id: user?.id }])
+        .select()
+        .single()
+
+      if (error) throw error
       
-      if (response.resource) {
-        setControls(prev => [...prev, response.resource])
-        return response.resource
+      if (data) {
+        setControls(prev => [...prev, data])
+        return data
       }
     } catch (error) {
       console.error('Erro ao criar controle:', error)
@@ -291,15 +317,18 @@ export function useControls() {
 
   const updateControl = async (id: string, updates: Partial<Control>) => {
     try {
-      const response = await mcpServer.call('update_resource', {
-        resource: 'isms_controls',
-        id,
-        data: updates
-      })
+      const { data, error } = await supabase
+        .from('isms_controls')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+      if (error) throw error
       
-      if (response.resource) {
-        setControls(prev => prev.map(c => c.id === id ? response.resource : c))
-        return response.resource
+      if (data) {
+        setControls(prev => prev.map(c => c.id === id ? data : c))
+        return data
       }
     } catch (error) {
       console.error('Erro ao atualizar controle:', error)
@@ -309,10 +338,12 @@ export function useControls() {
 
   const deleteControl = async (id: string) => {
     try {
-      await mcpServer.call('delete_resource', {
-        resource: 'isms_controls',
-        id
-      })
+      const { error } = await supabase
+        .from('isms_controls')
+        .delete()
+        .eq('id', id)
+
+      if (error) throw error
       
       setControls(prev => prev.filter(c => c.id !== id))
     } catch (error) {
@@ -326,7 +357,6 @@ export function useControls() {
 
 export function useDomains() {
   const { user } = useAuth()
-  const { mcpServer } = useMcpServer()
   const [domains, setDomains] = useState<Domain[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -337,23 +367,15 @@ export function useDomains() {
       try {
         setLoading(true)
         
-        const response = await mcpServer.call('list_resources', {
-          resource: 'isms_domains',
-          filter: { tenant_id: user.tenant_id }
-        })
+        const { data, error } = await supabase
+          .from('isms_domains')
+          .select('*')
+          .eq('tenant_id', user.id)
+          .order('name', { ascending: true })
 
-        if (response.resources) {
-          setDomains(response.resources.map((d: any) => ({
-            id: d.id,
-            name: d.name,
-            description: d.description,
-            parent_id: d.parent_id,
-            tenant_id: d.tenant_id,
-            created_at: d.created_at,
-            updated_at: d.updated_at,
-            controls_count: d.controls_count
-          })))
-        }
+        if (error) throw error
+        
+        setDomains(data || [])
       } catch (error) {
         console.error('Erro ao buscar domínios:', error)
       } finally {
@@ -362,14 +384,13 @@ export function useDomains() {
     }
 
     fetchDomains()
-  }, [user, mcpServer])
+  }, [user])
 
   return { domains, loading }
 }
 
 export function useFrameworks() {
   const { user } = useAuth()
-  const { mcpServer } = useMcpServer()
   const [frameworks, setFrameworks] = useState<Framework[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -380,23 +401,15 @@ export function useFrameworks() {
       try {
         setLoading(true)
         
-        const response = await mcpServer.call('list_resources', {
-          resource: 'isms_frameworks',
-          filter: { tenant_id: user.tenant_id }
-        })
+        const { data, error } = await supabase
+          .from('isms_frameworks')
+          .select('*')
+          .eq('tenant_id', user.id)
+          .order('name', { ascending: true })
 
-        if (response.resources) {
-          setFrameworks(response.resources.map((f: any) => ({
-            id: f.id,
-            name: f.name,
-            description: f.description,
-            version: f.version,
-            tenant_id: f.tenant_id,
-            created_at: f.created_at,
-            updated_at: f.updated_at,
-            controls_mapped: f.controls_mapped
-          })))
-        }
+        if (error) throw error
+        
+        setFrameworks(data || [])
       } catch (error) {
         console.error('Erro ao buscar frameworks:', error)
       } finally {
@@ -405,14 +418,13 @@ export function useFrameworks() {
     }
 
     fetchFrameworks()
-  }, [user, mcpServer])
+  }, [user])
 
   return { frameworks, loading }
 }
 
 export function useAssessments() {
   const { user } = useAuth()
-  const { mcpServer } = useMcpServer()
   const [assessments, setAssessments] = useState<Assessment[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -423,23 +435,15 @@ export function useAssessments() {
       try {
         setLoading(true)
         
-        const response = await mcpServer.call('list_resources', {
-          resource: 'isms_assessments',
-          filter: { tenant_id: user.tenant_id }
-        })
+        const { data, error } = await supabase
+          .from('isms_assessments')
+          .select('*')
+          .eq('tenant_id', user.id)
+          .order('assessment_date', { ascending: false })
 
-        if (response.resources) {
-          setAssessments(response.resources.map((a: any) => ({
-            id: a.id,
-            control_id: a.control_id,
-            effectiveness: a.effectiveness,
-            notes: a.notes,
-            assessor: a.assessor,
-            assessment_date: a.assessment_date,
-            tenant_id: a.tenant_id,
-            created_at: a.created_at
-          })))
-        }
+        if (error) throw error
+        
+        setAssessments(data || [])
       } catch (error) {
         console.error('Erro ao buscar avaliações:', error)
       } finally {
@@ -448,21 +452,21 @@ export function useAssessments() {
     }
 
     fetchAssessments()
-  }, [user, mcpServer])
+  }, [user])
 
   const createAssessment = async (assessment: Omit<Assessment, 'id' | 'created_at'>) => {
     try {
-      const response = await mcpServer.call('create_resource', {
-        resource: 'isms_assessments',
-        data: {
-          ...assessment,
-          tenant_id: user?.tenant_id
-        }
-      })
+      const { data, error } = await supabase
+        .from('isms_assessments')
+        .insert([{ ...assessment, tenant_id: user?.id }])
+        .select()
+        .single()
+
+      if (error) throw error
       
-      if (response.resource) {
-        setAssessments(prev => [...prev, response.resource])
-        return response.resource
+      if (data) {
+        setAssessments(prev => [...prev, data])
+        return data
       }
     } catch (error) {
       console.error('Erro ao criar avaliação:', error)

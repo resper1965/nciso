@@ -42,6 +42,8 @@ import {
   type Framework,
   type Assessment
 } from '@/lib/hooks/useISMSData'
+import { PolicyModal } from '@/components/isms/PolicyModal'
+import { ControlModal } from '@/components/isms/ControlModal'
 
 export default function ISMSPage() {
   const { t } = useTranslation('isms')
@@ -49,6 +51,11 @@ export default function ISMSPage() {
   const [activeTab, setActiveTab] = useState('overview')
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedStatus, setSelectedStatus] = useState<string>('all')
+  const [showPolicyModal, setShowPolicyModal] = useState(false)
+  const [showControlModal, setShowControlModal] = useState(false)
+  const [selectedPolicy, setSelectedPolicy] = useState<Policy | undefined>()
+  const [selectedControl, setSelectedControl] = useState<Control | undefined>()
+  const [modalLoading, setModalLoading] = useState(false)
 
   // Hooks para dados reais
   const { metrics, loading: metricsLoading } = useISMSMetrics()
@@ -111,6 +118,38 @@ export default function ISMSPage() {
     (selectedStatus === 'all' || control.status === selectedStatus)
   ) || []
 
+  const handlePolicySubmit = async (policy: Omit<Policy, 'id' | 'created_at' | 'updated_at'>) => {
+    try {
+      setModalLoading(true)
+      if (selectedPolicy) {
+        await updatePolicy(selectedPolicy.id, policy)
+      } else {
+        await createPolicy(policy)
+      }
+      setShowPolicyModal(false)
+    } catch (error) {
+      console.error('Erro ao salvar política:', error)
+    } finally {
+      setModalLoading(false)
+    }
+  }
+
+  const handleControlSubmit = async (control: Omit<Control, 'id' | 'created_at' | 'updated_at'>) => {
+    try {
+      setModalLoading(true)
+      if (selectedControl) {
+        await updateControl(selectedControl.id, control)
+      } else {
+        await createControl(control)
+      }
+      setShowControlModal(false)
+    } catch (error) {
+      console.error('Erro ao salvar controle:', error)
+    } finally {
+      setModalLoading(false)
+    }
+  }
+
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -130,7 +169,10 @@ export default function ISMSPage() {
             <Button 
               size="sm" 
               className="bg-[#00ade8] hover:bg-[#0098cc]"
-              onClick={() => {/* TODO: Abrir modal de criar política */}}
+              onClick={() => {
+                setSelectedPolicy(undefined)
+                setShowPolicyModal(true)
+              }}
             >
               <Plus className="h-4 w-4 mr-2" />
               {t('actions.createPolicy')}
@@ -366,7 +408,10 @@ export default function ISMSPage() {
                   <Button 
                     size="sm" 
                     className="bg-[#00ade8] hover:bg-[#0098cc]"
-                    onClick={() => {/* TODO: Abrir modal de criar política */}}
+                    onClick={() => {
+                      setSelectedPolicy(undefined)
+                      setShowPolicyModal(true)
+                    }}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     {t('actions.createPolicy')}
@@ -420,7 +465,10 @@ export default function ISMSPage() {
                   <Button 
                     size="sm" 
                     className="bg-[#00ade8] hover:bg-[#0098cc]"
-                    onClick={() => {/* TODO: Abrir modal de criar controle */}}
+                    onClick={() => {
+                      setSelectedControl(undefined)
+                      setShowControlModal(true)
+                    }}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     {t('actions.addControl')}
@@ -582,6 +630,23 @@ export default function ISMSPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Modais */}
+      <PolicyModal
+        isOpen={showPolicyModal}
+        onClose={() => setShowPolicyModal(false)}
+        policy={selectedPolicy}
+        onSubmit={handlePolicySubmit}
+        loading={modalLoading}
+      />
+
+      <ControlModal
+        isOpen={showControlModal}
+        onClose={() => setShowControlModal(false)}
+        control={selectedControl}
+        onSubmit={handleControlSubmit}
+        loading={modalLoading}
+      />
     </AppLayout>
   )
 } 

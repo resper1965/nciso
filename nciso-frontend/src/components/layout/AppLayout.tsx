@@ -18,7 +18,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       {/* Desktop Sidebar */}
       <aside className={cn(
         "hidden md:block bg-slate-900 border-r border-slate-700 flex-shrink-0 transition-all duration-300 ease-in-out",
-        isSidebarCollapsed ? "w-20" : "w-64"
+        isSidebarCollapsed ? "w-20" : "w-[270px]"
       )}>
         <Sidebar isCollapsed={isSidebarCollapsed} />
       </aside>
@@ -38,7 +38,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         className={cn(
           "hidden md:flex fixed z-40 p-1.5 rounded-r-lg bg-slate-800 text-white hover:bg-slate-700 transition-colors shadow-lg border-l border-slate-600",
-          isSidebarCollapsed ? "left-20" : "left-64"
+          isSidebarCollapsed ? "left-20" : "left-[270px]"
         )}
         style={{ 
           top: '50%', 

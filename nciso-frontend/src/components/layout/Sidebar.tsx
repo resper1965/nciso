@@ -20,12 +20,12 @@ export function Sidebar({ isCollapsed = false }: SidebarProps) {
   return (
     <div className={cn(
       "flex h-full flex-col bg-slate-900 border-r border-slate-700 transition-all duration-300 ease-in-out",
-      isCollapsed ? "w-20" : "w-64"
+      isCollapsed ? "w-20" : "w-[270px]"
     )}>
       {/* Logo */}
       <div className="flex h-16 items-center px-6 border-b border-slate-700">
         <div className="flex items-center">
-          <Logo size={isCollapsed ? "sm" : "md"} className="flex-shrink-0" />
+          <Logo size={isCollapsed ? "sm" : "lg"} className="flex-shrink-0" />
         </div>
       </div>
 
@@ -35,7 +35,7 @@ export function Sidebar({ isCollapsed = false }: SidebarProps) {
           {Object.entries(NAV_SECTIONS).map(([sectionKey, section]) => (
             <div key={sectionKey} className={cn("px-6", isCollapsed && "px-2")}>
               {!isCollapsed && (
-                <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-200">
                   {t(`navigation.sections.${sectionKey}`)}
                 </h3>
               )}

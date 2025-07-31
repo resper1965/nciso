@@ -5,12 +5,22 @@
  */
 
 const jwt = require('jsonwebtoken')
-const { createClient } = require('@supabase/supabase-js')
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+// Inicializar Supabase apenas se as variáveis estiverem disponíveis
+let supabase = null
+try {
+  const { createClient } = require('@supabase/supabase-js')
+  const supabaseUrl = process.env.SUPABASE_URL
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  
+  if (supabaseUrl && supabaseKey) {
+    supabase = createClient(supabaseUrl, supabaseKey)
+  } else {
+    console.warn('⚠️ Supabase not configured. Running in development mode.')
+  }
+} catch (error) {
+  console.warn('⚠️ Supabase not available. Running in development mode.')
+}
 
 /**
  * Middleware para validar token JWT
@@ -27,6 +37,20 @@ function validateToken(req, res, next) {
     }
     
     const token = authHeader.substring(7) // Remove 'Bearer '
+    
+    // Se Supabase não estiver configurado, usar JWT local
+    if (!supabase) {
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret')
+        req.user = decoded
+        return next()
+      } catch (jwtError) {
+        return res.status(401).json({
+          success: false,
+          message: 'Token inválido'
+        })
+      }
+    }
     
     // Verificar token no Supabase
     supabase.auth.getUser(token)

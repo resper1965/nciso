@@ -3,8 +3,7 @@
 import { useState } from 'react'
 import { Sidebar } from './Sidebar'
 import { Header } from './Header'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { ChevronLeft, ChevronRight, Menu } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface AppLayoutProps {
@@ -13,7 +12,6 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
 
   return (
     <div className="flex min-h-screen bg-slate-900">
@@ -25,20 +23,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         <Sidebar isCollapsed={isSidebarCollapsed} />
       </aside>
 
-      {/* Mobile Sidebar */}
-      <Sheet open={isMobileSidebarOpen} onOpenChange={setIsMobileSidebarOpen}>
-        <SheetTrigger asChild className="md:hidden fixed top-4 left-4 z-50">
-          <button
-            className="p-2 rounded-lg bg-slate-800 text-white hover:bg-slate-700 transition-colors"
-            aria-label="Open menu"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-80 bg-slate-900 border-r border-slate-700 p-0">
-          <Sidebar isCollapsed={false} />
-        </SheetContent>
-      </Sheet>
+
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">

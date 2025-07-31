@@ -53,6 +53,7 @@ export function Sidebar({ isCollapsed = false }: SidebarProps) {
                     key={item.id}
                     id={item.id}
                     label={t(`navigation.items.${item.id}`)}
+                    description={t(`navigation.descriptions.${item.id}`)}
                     icon={item.icon}
                     href={item.href}
                     isCollapsed={isCollapsed}

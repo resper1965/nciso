@@ -101,6 +101,18 @@ const resources = {
           assessments: 'n.Assessments',
           platform: 'n.Platform',
           tickets: 'n.Tickets'
+        },
+        descriptions: {
+          isms: 'Sistema de Gestão',
+          controls: 'Catálogo de Controles',
+          audit: 'Auditorias',
+          risk: 'Gestão de Riscos',
+          privacy: 'Proteção de Dados',
+          cirt: 'Resposta a Incidentes',
+          secdevops: 'Testes de Segurança',
+          assessments: 'Avaliações',
+          platform: 'Usuários e Permissões',
+          tickets: 'Suporte Interno'
         }
       },
       sections: {
@@ -284,6 +296,18 @@ const resources = {
           assessments: 'n.Assessments',
           platform: 'n.Platform',
           tickets: 'n.Tickets'
+        },
+        descriptions: {
+          isms: 'Information Security Management',
+          controls: 'Security Controls Catalog',
+          audit: 'Audits',
+          risk: 'Security Risk Management',
+          privacy: 'Data Protection',
+          cirt: 'Incident Response',
+          secdevops: 'Security Testing',
+          assessments: 'Security Assessments',
+          platform: 'Users and Permissions',
+          tickets: 'Internal Support'
         }
       },
       sections: {
@@ -465,6 +489,18 @@ const resources = {
           assessments: 'n.Assessments',
           platform: 'n.Platform',
           tickets: 'n.Tickets'
+        },
+        descriptions: {
+          isms: 'Sistema de Gestión de Seguridad de la Información',
+          controls: 'Catálogo centralizado de controles de seguridad',
+          audit: 'Sistema de auditoría y cumplimiento',
+          risk: 'Gestión de riesgos de seguridad',
+          privacy: 'Protección de datos y privacidad',
+          cirt: 'Centro de Respuesta a Incidentes',
+          secdevops: 'Seguridad en desarrollo y operaciones',
+          assessments: 'Evaluaciones de seguridad',
+          platform: 'Plataforma e infraestructura',
+          tickets: 'Sistema de tickets y soporte'
         }
       },
       sections: {

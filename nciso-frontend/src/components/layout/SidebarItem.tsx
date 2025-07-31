@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 interface SidebarItemProps {
   id: string
   label: string
+  description: string
   icon: LucideIcon
   href: string
   isActive?: boolean
@@ -16,6 +17,7 @@ interface SidebarItemProps {
 export function SidebarItem({ 
   id, 
   label, 
+  description,
   icon: Icon, 
   href, 
   isActive,
@@ -48,7 +50,12 @@ export function SidebarItem({
         <div className="absolute left-0 top-1/2 h-2 w-1 -translate-y-1/2 rounded-r-full bg-[#00ade8]" />
       )}
       <Icon className={cn("h-5 w-5 flex-shrink-0", !isCollapsed && "mr-3")} />
-      {!isCollapsed && <span className="truncate">{label}</span>}
+      {!isCollapsed && (
+        <div className="flex flex-col items-start min-w-0 flex-1">
+          <span className="truncate font-medium">{label}</span>
+          <span className="truncate text-xs text-slate-500 dark:text-slate-400">{description}</span>
+        </div>
+      )}
     </button>
   )
 } 

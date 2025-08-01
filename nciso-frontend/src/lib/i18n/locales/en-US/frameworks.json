@@ -1,0 +1,100 @@
+{
+  "frameworks": {
+    "title": "Frameworks",
+    "subtitle": "Control Framework Management",
+    "description": "Import and manage information security control frameworks",
+    
+    "actions": {
+      "import": "Import Framework",
+      "export": "Export Framework",
+      "view": "View Framework",
+      "edit": "Edit Framework",
+      "delete": "Delete Framework",
+      "activate": "Activate Framework",
+      "deactivate": "Deactivate Framework"
+    },
+    
+    "fields": {
+      "name": "Name",
+      "version": "Version",
+      "description": "Description",
+      "controls_count": "Controls Count",
+      "is_active": "Active",
+      "created_at": "Created at",
+      "updated_at": "Updated at"
+    },
+    
+    "default_frameworks": {
+      "iso27001": {
+        "name": "ISO 27001",
+        "version": "2022",
+        "description": "Information Security Management System (ISMS) based on ISO/IEC 27001:2022"
+      },
+      "nist": {
+        "name": "NIST CSF",
+        "version": "2.0",
+        "description": "NIST Cybersecurity Framework for improving critical infrastructure cybersecurity"
+      },
+      "cobit": {
+        "name": "COBIT",
+        "version": "2019",
+        "description": "Control Objectives for Information and Related Technologies"
+      }
+    },
+    
+    "messages": {
+      "imported": "Framework imported successfully",
+      "exported": "Framework exported successfully",
+      "activated": "Framework activated successfully",
+      "deactivated": "Framework deactivated successfully",
+      "deleted": "Framework deleted successfully",
+      "error_importing": "Error importing framework",
+      "error_exporting": "Error exporting framework",
+      "already_exists": "Framework already exists",
+      "no_frameworks": "No frameworks found",
+      "loading": "Loading frameworks...",
+      "importing": "Importing framework..."
+    },
+    
+    "import": {
+      "title": "Import Framework",
+      "default_frameworks": "Default Frameworks",
+      "custom_framework": "Custom Framework",
+      "select_framework": "Select Framework",
+      "upload_file": "File Upload",
+      "drag_drop": "Drag and drop a JSON file here",
+      "or_click": "or click to select",
+      "supported_formats": "Supported formats: JSON, CSV",
+      "import_progress": "Importing...",
+      "import_success": "Framework imported successfully!",
+      "import_error": "Error importing framework"
+    },
+    
+    "export": {
+      "title": "Export Framework",
+      "select_format": "Select Format",
+      "json_format": "JSON",
+      "csv_format": "CSV",
+      "xml_format": "XML",
+      "export_progress": "Exporting...",
+      "export_success": "Framework exported successfully!",
+      "export_error": "Error exporting framework"
+    },
+    
+    "stats": {
+      "total_frameworks": "Total Frameworks",
+      "active_frameworks": "Active Frameworks",
+      "total_controls": "Total Controls",
+      "controls_by_framework": "Controls by Framework",
+      "frameworks_by_status": "Frameworks by Status"
+    },
+    
+    "validation": {
+      "name_required": "Name is required",
+      "version_required": "Version is required",
+      "description_required": "Description is required",
+      "file_required": "File is required",
+      "invalid_format": "Invalid file format"
+    }
+  }
+} 

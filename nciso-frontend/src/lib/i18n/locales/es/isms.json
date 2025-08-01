@@ -1,0 +1,310 @@
+{
+  "isms": {
+    "title": "SGSI",
+    "subtitle": "Sistema de Gestión de Seguridad de la Información",
+    "description": "Infraestructura y base operacional del SGSI",
+    
+    "scope": {
+      "title": "Alcance del SGSI",
+      "subtitle": "Gestión de Alcances del Sistema",
+      "description": "Defina y gestione los alcances del Sistema de Gestión de Seguridad de la Información",
+      
+      "actions": {
+        "create": "Crear Alcance",
+        "edit": "Editar Alcance",
+        "delete": "Eliminar Alcance",
+        "view": "Visualizar Alcance",
+        "activate": "Activar Alcance",
+        "deactivate": "Desactivar Alcance"
+      },
+      
+      "fields": {
+        "name": "Nombre del Alcance",
+        "description": "Descripción",
+        "coverage": "Cobertura",
+        "applicable_units": "Unidades Aplicables",
+        "organization": "Organización",
+        "domains": "Dominios",
+        "is_active": "Activo",
+        "created_at": "Creado en",
+        "updated_at": "Actualizado en"
+      },
+      
+      "messages": {
+        "created": "Alcance creado exitosamente",
+        "updated": "Alcance actualizado exitosamente",
+        "deleted": "Alcance eliminado exitosamente",
+        "activated": "Alcance activado exitosamente",
+        "deactivated": "Alcance desactivado exitosamente",
+        "error_creating": "Error al crear alcance",
+        "error_updating": "Error al actualizar alcance",
+        "error_deleting": "Error al eliminar alcance",
+        "confirm_delete": "¿Está seguro de que desea eliminar este alcance?",
+        "no_scopes": "No se encontraron alcances",
+        "loading": "Cargando alcances..."
+      },
+      
+      "validation": {
+        "name_required": "El nombre del alcance es obligatorio",
+        "description_required": "La descripción es obligatoria",
+        "coverage_required": "La cobertura es obligatoria",
+        "organization_required": "La organización es obligatoria"
+      }
+    },
+    
+    "organizations": {
+      "title": "Organizaciones",
+      "subtitle": "Gestión de Organizaciones",
+      "description": "Registre y gestione las entidades organizacionales",
+      
+      "actions": {
+        "create": "Crear Organización",
+        "edit": "Editar Organización",
+        "delete": "Eliminar Organización",
+        "view": "Visualizar Organización"
+      },
+      
+      "fields": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "parent": "Organización Padre",
+        "description": "Descripción",
+        "is_active": "Activo"
+      },
+      
+      "types": {
+        "company": "Empresa",
+        "department": "Departamento",
+        "unit": "Unidad",
+        "division": "División"
+      },
+      
+      "messages": {
+        "created": "Organización creada exitosamente",
+        "updated": "Organización actualizada exitosamente",
+        "deleted": "Organización eliminada exitosamente",
+        "no_organizations": "No se encontraron organizaciones",
+        "error_loading": "Error al cargar organizaciones",
+        "error_creating": "Error al crear organización",
+        "error_updating": "Error al actualizar organización",
+        "error_deleting": "Error al eliminar organización",
+        "confirm_delete": "¿Está seguro de que desea eliminar esta organización?",
+        "loading": "Cargando organizaciones..."
+      },
+      "validation": {
+        "name_required": "El nombre de la organización es obligatorio",
+        "type_required": "El tipo de organización es obligatorio",
+        "parent_required": "La organización padre es obligatoria",
+        "company_no_parent": "Las empresas no pueden tener organización padre"
+      },
+      "help": {
+        "department_parent": "Los departamentos deben pertenecer a una empresa",
+        "unit_parent": "Las unidades pueden pertenecer a departamentos o empresas"
+      },
+      "hierarchy": {
+        "title": "Jerarquía Organizacional",
+        "description": "Visualice la estructura jerárquica de las organizaciones"
+      },
+      "stats": {
+        "total": "Total",
+        "active": "Activas",
+        "max_depth": "Profundidad Máx",
+        "avg_children": "Promedio Hijos",
+        "total_organizations": "organizaciones",
+        "active_organizations": "organizaciones activas",
+        "hierarchy_levels": "niveles jerárquicos",
+        "children_per_org": "hijos por organización",
+        "by_type": "Por Tipo",
+        "type_distribution": "Distribución por tipo de organización",
+        "activity_status": "Estado de Actividad",
+        "active_vs_inactive": "Organizaciones activas vs inactivas"
+      }
+    },
+    
+    "assets": {
+      "title": "Activos",
+      "subtitle": "Gestión de Activos",
+      "description": "Registre y gestione los activos de información",
+      
+      "actions": {
+        "create": "Crear Activo",
+        "edit": "Editar Activo",
+        "delete": "Eliminar Activo",
+        "view": "Visualizar Activo"
+      },
+      
+      "fields": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "owner": "Propietario",
+        "classification": "Clasificación",
+        "description": "Descripción",
+        "location": "Ubicación",
+        "value": "Valor",
+        "organization": "Organización",
+        "is_active": "Activo"
+      },
+      
+      "types": {
+        "physical": "Físico",
+        "digital": "Digital",
+        "person": "Persona",
+        "software": "Software",
+        "infrastructure": "Infraestructura",
+        "data": "Datos"
+      },
+      
+      "classification": {
+        "confidentiality": "Confidencialidad",
+        "integrity": "Integridad",
+        "availability": "Disponibilidad",
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      },
+      
+      "messages": {
+        "created": "Activo creado exitosamente",
+        "updated": "Activo actualizado exitosamente",
+        "deleted": "Activo eliminado exitosamente",
+        "no_assets": "No se encontraron activos",
+        "error_loading": "Error al cargar activos",
+        "error_creating": "Error al crear activo",
+        "error_updating": "Error al actualizar activo",
+        "error_deleting": "Error al eliminar activo",
+        "confirm_delete": "¿Está seguro de que desea eliminar este activo?",
+        "loading": "Cargando activos..."
+      },
+      "validation": {
+        "name_required": "El nombre del activo es obligatorio",
+        "owner_required": "El propietario es obligatorio",
+        "organization_required": "La organización es obligatoria",
+        "value_positive": "El valor debe ser positivo"
+      },
+      "classification": {
+        "summary": "Resumen de Clasificación CIA"
+      }
+    },
+    
+    "domains": {
+      "title": "Dominios",
+      "subtitle": "Gestión de Dominios",
+      "description": "Organice los dominios de seguridad de forma jerárquica",
+      
+      "actions": {
+        "create": "Crear Dominio",
+        "edit": "Editar Dominio",
+        "delete": "Eliminar Dominio",
+        "view": "Visualizar Dominio"
+      },
+      
+      "fields": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "parent": "Dominio Padre",
+        "level": "Nivel",
+        "path": "Ruta",
+        "is_active": "Activo"
+      },
+      
+      "messages": {
+        "created": "Dominio creado exitosamente",
+        "updated": "Dominio actualizado exitosamente",
+        "deleted": "Dominio eliminado exitosamente",
+        "no_domains": "No se encontraron dominios",
+        "error_loading": "Error al cargar dominios",
+        "error_creating": "Error al crear dominio",
+        "error_updating": "Error al actualizar dominio",
+        "error_deleting": "Error al eliminar dominio",
+        "confirm_delete": "¿Está seguro de que desea eliminar este dominio?",
+        "loading": "Cargando dominios..."
+      },
+      "validation": {
+        "name_required": "El nombre del dominio es obligatorio",
+        "description_required": "La descripción es obligatoria",
+        "max_level_reached": "Se alcanzó el máximo de 3 niveles"
+      },
+      "help": {
+        "parent_selection": "Seleccione un dominio padre para crear una jerarquía"
+      },
+      "hierarchy": {
+        "info": "Información de la Jerarquía",
+        "preview": "Vista Previa de la Jerarquía",
+        "max_level_warning": "Este será el nivel máximo de la jerarquía"
+      },
+      "filters": {
+        "all_levels": "Todos los niveles",
+        "level_1": "Nivel 1",
+        "level_2": "Nivel 2",
+        "level_3": "Nivel 3"
+      },
+      "fields": {
+        "parent_placeholder": "Seleccione un dominio padre",
+        "no_parent": "Sin dominio padre (nivel raíz)"
+      }
+    },
+    
+    "evaluations": {
+      "title": "Evaluaciones",
+      "subtitle": "Evaluaciones Estructuradas",
+      "description": "Realice evaluaciones estructuradas de seguridad",
+      
+      "actions": {
+        "create": "Crear Evaluación",
+        "edit": "Editar Evaluación",
+        "delete": "Eliminar Evaluación",
+        "view": "Visualizar Evaluación",
+        "start": "Iniciar Evaluación",
+        "complete": "Completar Evaluación"
+      },
+      
+      "fields": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "domain": "Dominio",
+        "controls": "Controles",
+        "status": "Estado",
+        "score": "Puntuación",
+        "evaluator": "Evaluador",
+        "evidence": "Evidencias"
+      },
+      
+      "status": {
+        "draft": "Borrador",
+        "in_progress": "En Progreso",
+        "completed": "Completada",
+        "reviewed": "Revisada"
+      },
+      
+      "messages": {
+        "created": "Evaluación creada exitosamente",
+        "updated": "Evaluación actualizada exitosamente",
+        "deleted": "Evaluación eliminada exitosamente",
+        "started": "Evaluación iniciada exitosamente",
+        "completed": "Evaluación completada exitosamente",
+        "no_evaluations": "No se encontraron evaluaciones"
+      }
+    },
+    
+    "stats": {
+      "total_scopes": "Total de Alcances",
+      "active_scopes": "Alcances Activos",
+      "total_organizations": "Total de Organizaciones",
+      "total_assets": "Total de Activos",
+      "assets_by_type": "Activos por Tipo",
+      "assets_by_classification": "Activos por Clasificación",
+      "total_domains": "Total de Dominios",
+      "domains_by_level": "Dominios por Nivel"
+    },
+    
+    "filters": {
+      "title": "Filtros",
+      "search_placeholder": "Buscar...",
+      "all_types": "Todos los tipos",
+      "all_status": "Todos los estados",
+      "all_organizations": "Todas las organizaciones",
+      "clear_filters": "Limpiar filtros"
+    }
+  }
+} 

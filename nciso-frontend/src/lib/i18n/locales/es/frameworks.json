@@ -1,0 +1,100 @@
+{
+  "frameworks": {
+    "title": "Frameworks",
+    "subtitle": "Gestión de Frameworks de Control",
+    "description": "Importar y gestionar frameworks de control de seguridad de la información",
+    
+    "actions": {
+      "import": "Importar Framework",
+      "export": "Exportar Framework",
+      "view": "Ver Framework",
+      "edit": "Editar Framework",
+      "delete": "Eliminar Framework",
+      "activate": "Activar Framework",
+      "deactivate": "Desactivar Framework"
+    },
+    
+    "fields": {
+      "name": "Nombre",
+      "version": "Versión",
+      "description": "Descripción",
+      "controls_count": "Número de Controles",
+      "is_active": "Activo",
+      "created_at": "Creado en",
+      "updated_at": "Actualizado en"
+    },
+    
+    "default_frameworks": {
+      "iso27001": {
+        "name": "ISO 27001",
+        "version": "2022",
+        "description": "Sistema de Gestión de Seguridad de la Información (SGSI) basado en ISO/IEC 27001:2022"
+      },
+      "nist": {
+        "name": "NIST CSF",
+        "version": "2.0",
+        "description": "Framework de Ciberseguridad NIST para mejorar la ciberseguridad de la infraestructura crítica"
+      },
+      "cobit": {
+        "name": "COBIT",
+        "version": "2019",
+        "description": "Objetivos de Control para Información y Tecnologías Relacionadas"
+      }
+    },
+    
+    "messages": {
+      "imported": "Framework importado exitosamente",
+      "exported": "Framework exportado exitosamente",
+      "activated": "Framework activado exitosamente",
+      "deactivated": "Framework desactivado exitosamente",
+      "deleted": "Framework eliminado exitosamente",
+      "error_importing": "Error al importar framework",
+      "error_exporting": "Error al exportar framework",
+      "already_exists": "Framework ya existe",
+      "no_frameworks": "No se encontraron frameworks",
+      "loading": "Cargando frameworks...",
+      "importing": "Importando framework..."
+    },
+    
+    "import": {
+      "title": "Importar Framework",
+      "default_frameworks": "Frameworks Predeterminados",
+      "custom_framework": "Framework Personalizado",
+      "select_framework": "Seleccionar Framework",
+      "upload_file": "Carga de Archivo",
+      "drag_drop": "Arrastra y suelta un archivo JSON aquí",
+      "or_click": "o haz clic para seleccionar",
+      "supported_formats": "Formatos soportados: JSON, CSV",
+      "import_progress": "Importando...",
+      "import_success": "¡Framework importado exitosamente!",
+      "import_error": "Error al importar framework"
+    },
+    
+    "export": {
+      "title": "Exportar Framework",
+      "select_format": "Seleccionar Formato",
+      "json_format": "JSON",
+      "csv_format": "CSV",
+      "xml_format": "XML",
+      "export_progress": "Exportando...",
+      "export_success": "¡Framework exportado exitosamente!",
+      "export_error": "Error al exportar framework"
+    },
+    
+    "stats": {
+      "total_frameworks": "Total de Frameworks",
+      "active_frameworks": "Frameworks Activos",
+      "total_controls": "Total de Controles",
+      "controls_by_framework": "Controles por Framework",
+      "frameworks_by_status": "Frameworks por Estado"
+    },
+    
+    "validation": {
+      "name_required": "El nombre es obligatorio",
+      "version_required": "La versión es obligatoria",
+      "description_required": "La descripción es obligatoria",
+      "file_required": "El archivo es obligatorio",
+      "invalid_format": "Formato de archivo inválido"
+    }
+  }
+} 

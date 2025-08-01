@@ -1,0 +1,10 @@
+[33m66b3041[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m fix: add debug verification and install all dependencies in Dockerfile
+[33m7ddd325[m fix: install all dependencies in Dockerfile to resolve build error
+[33ma0f5f5f[m feat: increase sidebar width to 270px and logo size to lg
+[33me4a99e0[m fix: adjust logo size and reduce text font size in sidebar
+[33me6e950a[m refactor: remove unused mobile hamburger menu
+[33m463d8b8[m fix: reduce description font size in sidebar to prevent overflow
+[33ma2f29d2[m feat: replace text logo with official n.CISO logo SVG component
+[33mfc3a3a3[m feat: implement unified dark slate color palette and reduce bento grid sizes
+[33ma8d8a67[m feat: add descriptions to navigation items with translations
+[33m5a4e5ed[m refactor: improve bento grid design and clean up debug logs

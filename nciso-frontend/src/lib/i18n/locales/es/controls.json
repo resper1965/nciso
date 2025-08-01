@@ -1,0 +1,117 @@
+{
+  "controls": {
+    "title": "Controles",
+    "subtitle": "Catálogo de Controles de Seguridad",
+    "description": "Gestionar y monitorear los controles de seguridad de la información",
+    
+    "actions": {
+      "create": "Crear Control",
+      "edit": "Editar Control",
+      "delete": "Eliminar Control",
+      "view": "Ver Control",
+      "duplicate": "Duplicar Control",
+      "export": "Exportar",
+      "import": "Importar"
+    },
+    
+    "fields": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "type": "Tipo",
+      "domain": "Dominio",
+      "framework": "Framework",
+      "status": "Estado",
+      "effectiveness": "Efectividad",
+      "priority": "Prioridad",
+      "owner": "Responsable",
+      "created_at": "Creado en",
+      "updated_at": "Actualizado en"
+    },
+    
+    "types": {
+      "preventive": "Preventivo",
+      "corrective": "Correctivo",
+      "detective": "Detectivo",
+      "deterrent": "Disuasivo"
+    },
+    
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "draft": "Borrador",
+      "archived": "Archivado"
+    },
+    
+    "priorities": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta",
+      "critical": "Crítica"
+    },
+    
+    "frameworks": {
+      "iso27001": "ISO 27001",
+      "nist": "NIST CSF",
+      "cobit": "COBIT",
+      "custom": "Personalizado"
+    },
+    
+    "domains": {
+      "access_control": "Control de Acceso",
+      "asset_management": "Gestión de Activos",
+      "business_continuity": "Continuidad del Negocio",
+      "communications": "Comunicaciones",
+      "compliance": "Cumplimiento",
+      "cryptography": "Criptografía",
+      "human_resources": "Recursos Humanos",
+      "incident_management": "Gestión de Incidentes",
+      "operations": "Operaciones",
+      "physical_security": "Seguridad Física",
+      "risk_management": "Gestión de Riesgos",
+      "security_architecture": "Arquitectura de Seguridad",
+      "supplier_relationships": "Relaciones con Proveedores",
+      "system_development": "Desarrollo de Sistemas"
+    },
+    
+    "messages": {
+      "created": "Control creado exitosamente",
+      "updated": "Control actualizado exitosamente",
+      "deleted": "Control eliminado exitosamente",
+      "error_creating": "Error al crear control",
+      "error_updating": "Error al actualizar control",
+      "error_deleting": "Error al eliminar control",
+      "confirm_delete": "¿Está seguro de que desea eliminar este control?",
+      "no_controls": "No se encontraron controles",
+      "loading": "Cargando controles...",
+      "saving": "Guardando..."
+    },
+    
+    "filters": {
+      "title": "Filtros",
+      "all_types": "Todos los tipos",
+      "all_status": "Todos los estados",
+      "all_frameworks": "Todos los frameworks",
+      "all_domains": "Todos los dominios",
+      "search_placeholder": "Buscar controles...",
+      "clear_filters": "Limpiar filtros"
+    },
+    
+    "stats": {
+      "total_controls": "Total de Controles",
+      "active_controls": "Controles Activos",
+      "average_effectiveness": "Efectividad Promedio",
+      "controls_by_type": "Controles por Tipo",
+      "controls_by_domain": "Controles por Dominio",
+      "controls_by_framework": "Controles por Framework"
+    },
+    
+    "validation": {
+      "name_required": "El nombre es obligatorio",
+      "description_required": "La descripción es obligatoria",
+      "type_required": "El tipo es obligatorio",
+      "domain_required": "El dominio es obligatorio",
+      "framework_required": "El framework es obligatorio",
+      "effectiveness_range": "La efectividad debe estar entre 0 y 100"
+    }
+  }
+} 

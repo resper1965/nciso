@@ -42,14 +42,40 @@ async function testMCPServer() {
     })
     console.log('Resultado:', JSON.stringify(createPolicyResult, null, 2))
     
-    // Teste 4: Listar Controles
-    console.log('\n📋 Teste 4: Listar Controles')
+    // Teste 4: Listar Controles (Básico)
+    console.log('\n📋 Teste 4: Listar Controles (Básico)')
     const controlsResult = await server.listControls({
       tenant_id: 'test-tenant',
-      control_type: 'preventive',
       limit: 5
     })
     console.log('Resultado:', JSON.stringify(controlsResult, null, 2))
+    
+    // Teste 4.1: Listar Controles com Filtro por Tipo
+    console.log('\n📋 Teste 4.1: Listar Controles com Filtro por Tipo')
+    const controlsByTypeResult = await server.listControls({
+      tenant_id: 'test-tenant',
+      control_type: 'preventive',
+      limit: 10
+    })
+    console.log('Resultado:', JSON.stringify(controlsByTypeResult, null, 2))
+    
+    // Teste 4.2: Listar Controles com Filtro por Status
+    console.log('\n📋 Teste 4.2: Listar Controles com Filtro por Status')
+    const controlsByStatusResult = await server.listControls({
+      tenant_id: 'test-tenant',
+      implementation_status: 'implemented',
+      limit: 10
+    })
+    console.log('Resultado:', JSON.stringify(controlsByStatusResult, null, 2))
+    
+    // Teste 4.3: Listar Controles com Paginação
+    console.log('\n📋 Teste 4.3: Listar Controles com Paginação')
+    const controlsPaginatedResult = await server.listControls({
+      tenant_id: 'test-tenant',
+      limit: 3,
+      offset: 0
+    })
+    console.log('Resultado:', JSON.stringify(controlsPaginatedResult, null, 2))
     
     // Teste 5: Criar Controle
     console.log('\n📋 Teste 5: Criar Controle')

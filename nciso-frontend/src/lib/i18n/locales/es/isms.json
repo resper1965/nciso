@@ -748,6 +748,19 @@
           "close": "Cerrar"
         }
       }
+    },
+    
+    "stats": {
+      "overview": "Vista General",
+      "description": "Estadísticas generales del sistema ISMS"
+    },
+    
+    "quickActions": {
+      "title": "Acciones Rápidas",
+      "description": "Acceda rápidamente a las funciones más utilizadas",
+      "createScope": "Crear Alcance",
+      "registerAsset": "Registrar Activo",
+      "startEvaluation": "Iniciar Evaluación"
     }
   }
 } 

@@ -529,6 +529,19 @@
       "revokeConfirm": "Are you sure you want to revoke this credential?",
       "name": "Name",
       "description": "Description",
+      
+      "stats": {
+        "overview": "Overview",
+        "description": "General ISMS system statistics"
+      },
+      
+      "quickActions": {
+        "title": "Quick Actions",
+        "description": "Quickly access the most used features",
+        "createScope": "Create Scope",
+        "registerAsset": "Register Asset",
+        "startEvaluation": "Start Evaluation"
+      }
       "asset": "Asset",
       "holder": "Holder",
       "accessType": "Access Type",

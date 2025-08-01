@@ -498,6 +498,19 @@
       "revokeConfirm": "Tem certeza que deseja revogar esta credencial?",
       "name": "Nome",
       "description": "Descrição",
+      
+      "stats": {
+        "overview": "Visão Geral",
+        "description": "Estatísticas gerais do sistema ISMS"
+      },
+      
+      "quickActions": {
+        "title": "Ações Rápidas",
+        "description": "Acesse rapidamente as funcionalidades mais utilizadas",
+        "createScope": "Criar Escopo",
+        "registerAsset": "Registrar Ativo",
+        "startEvaluation": "Iniciar Avaliação"
+      }
       "asset": "Ativo",
       "holder": "Detentor",
       "accessType": "Tipo de Acesso",

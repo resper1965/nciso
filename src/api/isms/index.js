@@ -2,8 +2,9 @@ const express = require('express');
 const { createClient } = require('@supabase/supabase-js');
 const router = express.Router();
 
-// Import domain router
+// Import routers
 const domainsRouter = require('./domains');
+const externalDocumentsRouter = require('./external-documents');
 
 // Initialize Supabase client (with fallback for development)
 let supabase = null;
@@ -400,8 +401,9 @@ router.post('/policies/:id/approve', authenticateToken, validateTenant, async (r
 // DOMAINS ROUTES
 // =====================================================
 
-// Mount domains router
+// Mount routers
 router.use('/domains', domainsRouter);
+router.use('/external-documents', externalDocumentsRouter);
 
 // =====================================================
 // CONTROLS CRUD
@@ -1128,6 +1130,13 @@ router.get('/', (req, res) => {
       },
       assessments: {
         'GET /assessments': 'List assessments'
+      },
+      external_documents: {
+        'POST /external-documents/ingest': 'Ingest external document',
+        'GET /external-documents': 'List external documents',
+        'GET /external-documents/:id': 'Get external document',
+        'GET /external-documents/:id/download': 'Download external document',
+        'DELETE /external-documents/:id': 'Delete external document'
       }
     },
     features: [
@@ -1135,7 +1144,12 @@ router.get('/', (req, res) => {
       'Gestão de Controles Organizacionais',
       'Sistema de Domínios Hierárquicos',
       'Avaliações de Conformidade',
-      'Workflow de Aprovação de Políticas'
+      'Workflow de Aprovação de Políticas',
+      'Integração de Documentos Externos',
+      'Sincronização com Sistemas Externos (SharePoint, OneDrive, GED)',
+      'Validação de Integridade por Checksum',
+      'Suporte Multi-idioma (pt-BR, en-US, es)',
+      'Armazenamento Seguro no Supabase Storage'
     ]
   });
 });

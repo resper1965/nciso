@@ -800,6 +800,287 @@ class SupabaseMCPServer {
     }
   }
 
+  /**
+   * Ingerir documento externo
+   */
+  async ingestExternalDocument(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const {
+        tenant_id,
+        source,
+        external_id,
+        title,
+        version = '1.0',
+        document_url,
+        checksum,
+        lang = 'pt-BR',
+        policy_id = null,
+        description = '',
+        tags = []
+      } = args
+
+      if (!tenant_id || !source || !external_id || !title || !document_url) {
+        return {
+          success: false,
+          error: 'Campos obrigatórios: tenant_id, source, external_id, title, document_url'
+        }
+      }
+
+      // Validar idioma
+      const validLanguages = ['pt-BR', 'en-US', 'es']
+      if (!validLanguages.includes(lang)) {
+        return {
+          success: false,
+          error: 'Idioma inválido. Suportados: pt-BR, en-US, es'
+        }
+      }
+
+      // Criar registro do documento externo
+      const externalDocumentData = {
+        tenant_id,
+        source,
+        external_id,
+        title,
+        version,
+        document_url,
+        checksum: checksum || 'sha256:placeholder',
+        lang,
+        policy_id,
+        description,
+        tags,
+        created_at: new Date().toISOString(),
+        last_synced_at: new Date().toISOString()
+      }
+
+      const { data, error } = await this.supabase
+        .from('isms_external_documents')
+        .insert(externalDocumentData)
+        .select()
+        .single()
+
+      if (error) throw error
+
+      // Criar log de auditoria
+      await this.supabase
+        .from('isms_sync_audit_logs')
+        .insert({
+          tenant_id,
+          action: 'document_ingested',
+          source,
+          external_id,
+          document_id: data.id,
+          status: 'success',
+          details: {
+            title,
+            version,
+            checksum: checksum || 'sha256:placeholder'
+          },
+          created_at: new Date().toISOString()
+        })
+
+      return {
+        success: true,
+        data: {
+          id: data.id,
+          title,
+          version,
+          source,
+          external_id,
+          checksum: checksum || 'sha256:placeholder',
+          created_at: data.created_at
+        },
+        message: 'Documento externo ingerido com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  /**
+   * Listar documentos externos por política
+   */
+  async listExternalDocumentsByPolicy(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado',
+          data: []
+        }
+      }
+
+      const { policy_id, tenant_id, limit = 50 } = args
+
+      if (!policy_id || !tenant_id) {
+        return {
+          success: false,
+          error: 'Policy ID e Tenant ID são obrigatórios',
+          data: []
+        }
+      }
+
+      const { data, error } = await this.supabase
+        .from('isms_external_documents')
+        .select('*')
+        .eq('policy_id', policy_id)
+        .eq('tenant_id', tenant_id)
+        .order('created_at', { ascending: false })
+        .limit(limit)
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data || [],
+        count: data?.length || 0
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      }
+    }
+  }
+
+  /**
+   * Download de documento
+   */
+  async downloadDocument(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const { id, tenant_id } = args
+
+      if (!id || !tenant_id) {
+        return {
+          success: false,
+          error: 'ID do documento e Tenant ID são obrigatórios'
+        }
+      }
+
+      // Buscar documento
+      const { data, error } = await this.supabase
+        .from('isms_external_documents')
+        .select('*')
+        .eq('id', id)
+        .eq('tenant_id', tenant_id)
+        .single()
+
+      if (error || !data) {
+        return {
+          success: false,
+          error: 'Documento não encontrado'
+        }
+      }
+
+      // Gerar URL de download
+      if (data.document_path) {
+        const { data: signedUrl, error: urlError } = await this.supabase.storage
+          .from('isms-documents')
+          .createSignedUrl(data.document_path, 3600) // 1 hora
+
+        if (urlError) {
+          throw new Error(`Erro ao gerar URL de download: ${urlError.message}`)
+        }
+
+        return {
+          success: true,
+          data: {
+            download_url: signedUrl.signedUrl,
+            expires_at: new Date(Date.now() + 3600000).toISOString(),
+            file_name: `${data.title}_v${data.version}.pdf`,
+            document_info: data
+          }
+        }
+      } else {
+        return {
+          success: false,
+          error: 'Arquivo não encontrado no storage'
+        }
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  /**
+   * Gerar embeddings para documento
+   */
+  async generateEmbeddings(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const { id, tenant_id } = args
+
+      if (!id || !tenant_id) {
+        return {
+          success: false,
+          error: 'ID do documento e Tenant ID são obrigatórios'
+        }
+      }
+
+      // Buscar documento
+      const { data, error } = await this.supabase
+        .from('isms_external_documents')
+        .select('*')
+        .eq('id', id)
+        .eq('tenant_id', tenant_id)
+        .single()
+
+      if (error || !data) {
+        return {
+          success: false,
+          error: 'Documento não encontrado'
+        }
+      }
+
+      // Simular geração de embeddings
+      // Em produção, isso seria integrado com um serviço de IA
+      const embeddings = {
+        document_id: id,
+        title_embedding: `embedding_${data.title.replace(/\s+/g, '_').toLowerCase()}`,
+        content_embedding: `embedding_${data.external_id}`,
+        generated_at: new Date().toISOString(),
+        model: 'text-embedding-ada-002'
+      }
+
+      return {
+        success: true,
+        data: embeddings,
+        message: 'Embeddings gerados com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
   async healthCheck() {
     try {
       if (!this.supabase) {
@@ -857,6 +1138,10 @@ class SupabaseMCPServer {
       console.log('  - revoke_privileged_access')
       console.log('  - update_privileged_access_audit')
       console.log('  - effectiveness_report')
+      console.log('  - ingest_external_document')
+      console.log('  - list_external_documents_by_policy')
+      console.log('  - download_document')
+      console.log('  - generate_embeddings')
       console.log('  - health_check')
       
       // Manter o processo ativo

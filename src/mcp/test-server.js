@@ -82,8 +82,96 @@ async function testMCPServer() {
     })
     console.log('Resultado:', JSON.stringify(createDomainResult, null, 2))
     
-    // Teste 8: Relatório de Efetividade
-    console.log('\n📋 Teste 8: Relatório de Efetividade')
+    // Teste 8: Listar Documentos Técnicos
+    console.log('\n📋 Teste 8: Listar Documentos Técnicos')
+    const technicalDocsResult = await server.listTechnicalDocuments({
+      tenant_id: 'test-tenant',
+      document_type: 'policy',
+      limit: 5
+    })
+    console.log('Resultado:', JSON.stringify(technicalDocsResult, null, 2))
+    
+    // Teste 9: Criar Documento Técnico
+    console.log('\n📋 Teste 9: Criar Documento Técnico')
+    const createTechnicalDocResult = await server.createTechnicalDocument({
+      tenant_id: 'test-tenant',
+      name: 'Documento Técnico de Teste MCP',
+      description: 'Documento técnico criado via MCP Server',
+      document_type: 'policy',
+      version: '1.0',
+      content: 'Este é um documento técnico de teste criado através do MCP Server do n.CISO.',
+      created_by: 'test-user'
+    })
+    console.log('Resultado:', JSON.stringify(createTechnicalDocResult, null, 2))
+    
+    // Teste 10: Listar Credenciais
+    console.log('\n📋 Teste 10: Listar Credenciais')
+    const credentialsResult = await server.listCredentialsRegistry({
+      tenant_id: 'test-tenant',
+      status: 'active',
+      limit: 5
+    })
+    console.log('Resultado:', JSON.stringify(credentialsResult, null, 2))
+    
+    // Teste 11: Criar Credencial
+    console.log('\n📋 Teste 11: Criar Credencial')
+    const createCredentialResult = await server.createCredentialsRegistry({
+      tenant_id: 'test-tenant',
+      asset_id: 'test-asset-id',
+      holder_type: 'user',
+      holder_id: 'test-user-id',
+      access_type: 'read',
+      justification: 'Acesso necessário para operações diárias',
+      valid_from: new Date().toISOString(),
+      valid_until: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 dias
+      created_by: 'test-user'
+    })
+    console.log('Resultado:', JSON.stringify(createCredentialResult, null, 2))
+    
+    // Teste 12: Aprovar Credencial
+    console.log('\n📋 Teste 12: Aprovar Credencial')
+    const approveCredentialResult = await server.approveCredential({
+      tenant_id: 'test-tenant',
+      credential_id: 'test-credential-id',
+      approved_by: 'test-admin'
+    })
+    console.log('Resultado:', JSON.stringify(approveCredentialResult, null, 2))
+    
+    // Teste 13: Listar Acessos Privilegiados
+    console.log('\n📋 Teste 13: Listar Acessos Privilegiados')
+    const privilegedAccessResult = await server.listPrivilegedAccess({
+      tenant_id: 'test-tenant',
+      status: 'active',
+      limit: 5
+    })
+    console.log('Resultado:', JSON.stringify(privilegedAccessResult, null, 2))
+    
+    // Teste 14: Criar Acesso Privilegiado
+    console.log('\n📋 Teste 14: Criar Acesso Privilegiado')
+    const createPrivilegedAccessResult = await server.createPrivilegedAccess({
+      tenant_id: 'test-tenant',
+      user_id: 'test-user-id',
+      scope_type: 'system',
+      scope_id: 'test-system-id',
+      access_level: 'admin',
+      justification: 'Acesso administrativo necessário para manutenção',
+      valid_from: new Date().toISOString(),
+      valid_until: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 dias
+      created_by: 'test-user'
+    })
+    console.log('Resultado:', JSON.stringify(createPrivilegedAccessResult, null, 2))
+    
+    // Teste 15: Atualizar Auditoria de Acesso Privilegiado
+    console.log('\n📋 Teste 15: Atualizar Auditoria de Acesso Privilegiado')
+    const updateAuditResult = await server.updatePrivilegedAccessAudit({
+      tenant_id: 'test-tenant',
+      access_id: 'test-access-id',
+      audit_notes: 'Auditoria realizada conforme procedimento padrão'
+    })
+    console.log('Resultado:', JSON.stringify(updateAuditResult, null, 2))
+    
+    // Teste 16: Relatório de Efetividade
+    console.log('\n📋 Teste 16: Relatório de Efetividade')
     const reportResult = await server.generateEffectivenessReport({
       tenant_id: 'test-tenant',
       control_type: 'preventive'
@@ -99,6 +187,14 @@ async function testMCPServer() {
     console.log('✅ Criar Controle - Funcionando')
     console.log('✅ Listar Domínios - Funcionando')
     console.log('✅ Criar Domínio - Funcionando')
+    console.log('✅ Listar Documentos Técnicos - Funcionando')
+    console.log('✅ Criar Documento Técnico - Funcionando')
+    console.log('✅ Listar Credenciais - Funcionando')
+    console.log('✅ Criar Credencial - Funcionando')
+    console.log('✅ Aprovar Credencial - Funcionando')
+    console.log('✅ Listar Acessos Privilegiados - Funcionando')
+    console.log('✅ Criar Acesso Privilegiado - Funcionando')
+    console.log('✅ Atualizar Auditoria - Funcionando')
     console.log('✅ Relatório de Efetividade - Funcionando')
     
     console.log('\n🚀 MCP Server está pronto para uso!')

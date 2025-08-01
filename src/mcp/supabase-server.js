@@ -301,6 +301,448 @@ class SupabaseMCPServer {
     }
   }
 
+  // ===== NOVOS MÉTODOS PARA TECHNICAL DOCUMENTS =====
+
+  async listTechnicalDocuments(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado',
+          data: []
+        }
+      }
+
+      let query = this.supabase
+        .from('technical_documents')
+        .select('*')
+        .eq('tenant_id', args.tenant_id)
+        .limit(args.limit || 50)
+
+      if (args.document_type) {
+        query = query.eq('document_type', args.document_type)
+      }
+
+      if (args.status) {
+        query = query.eq('status', args.status)
+      }
+
+      if (args.scope_id) {
+        query = query.eq('scope_id', args.scope_id)
+      }
+
+      const { data, error } = await query
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data || [],
+        count: data?.length || 0
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      }
+    }
+  }
+
+  async createTechnicalDocument(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const documentData = {
+        tenant_id: args.tenant_id,
+        name: args.name,
+        description: args.description || '',
+        document_type: args.document_type,
+        version: args.version || '1.0',
+        content: args.content || '',
+        file_path: args.file_path || null,
+        file_size: args.file_size || null,
+        file_type: args.file_type || null,
+        tags: args.tags || [],
+        scope_id: args.scope_id || null,
+        asset_id: args.asset_id || null,
+        control_id: args.control_id || null,
+        status: 'draft',
+        created_by: args.created_by,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+
+      const { data, error } = await this.supabase
+        .from('technical_documents')
+        .insert(documentData)
+        .select()
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data[0],
+        message: 'Documento técnico criado com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  // ===== NOVOS MÉTODOS PARA CREDENTIALS REGISTRY =====
+
+  async listCredentialsRegistry(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado',
+          data: []
+        }
+      }
+
+      let query = this.supabase
+        .from('credentials_registry')
+        .select('*')
+        .eq('tenant_id', args.tenant_id)
+        .limit(args.limit || 50)
+
+      if (args.status) {
+        query = query.eq('status', args.status)
+      }
+
+      if (args.access_type) {
+        query = query.eq('access_type', args.access_type)
+      }
+
+      if (args.asset_id) {
+        query = query.eq('asset_id', args.asset_id)
+      }
+
+      if (args.holder_type) {
+        query = query.eq('holder_type', args.holder_type)
+      }
+
+      const { data, error } = await query
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data || [],
+        count: data?.length || 0
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      }
+    }
+  }
+
+  async createCredentialsRegistry(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const credentialData = {
+        tenant_id: args.tenant_id,
+        asset_id: args.asset_id,
+        holder_type: args.holder_type, // 'user' or 'team'
+        holder_id: args.holder_id,
+        access_type: args.access_type,
+        justification: args.justification || '',
+        valid_from: args.valid_from,
+        valid_until: args.valid_until,
+        status: 'pending',
+        approved_by: null,
+        approved_at: null,
+        revoked_by: null,
+        revoked_at: null,
+        created_by: args.created_by,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+
+      const { data, error } = await this.supabase
+        .from('credentials_registry')
+        .insert(credentialData)
+        .select()
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data[0],
+        message: 'Credencial criada com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  async approveCredential(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const { data, error } = await this.supabase
+        .from('credentials_registry')
+        .update({
+          status: 'approved',
+          approved_by: args.approved_by,
+          approved_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', args.credential_id)
+        .eq('tenant_id', args.tenant_id)
+        .select()
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data[0],
+        message: 'Credencial aprovada com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  async revokeCredential(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const { data, error } = await this.supabase
+        .from('credentials_registry')
+        .update({
+          status: 'revoked',
+          revoked_by: args.revoked_by,
+          revoked_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', args.credential_id)
+        .eq('tenant_id', args.tenant_id)
+        .select()
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data[0],
+        message: 'Credencial revogada com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  // ===== NOVOS MÉTODOS PARA PRIVILEGED ACCESS =====
+
+  async listPrivilegedAccess(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado',
+          data: []
+        }
+      }
+
+      let query = this.supabase
+        .from('privileged_access')
+        .select('*')
+        .eq('tenant_id', args.tenant_id)
+        .limit(args.limit || 50)
+
+      if (args.status) {
+        query = query.eq('status', args.status)
+      }
+
+      if (args.access_level) {
+        query = query.eq('access_level', args.access_level)
+      }
+
+      if (args.scope_type) {
+        query = query.eq('scope_type', args.scope_type)
+      }
+
+      if (args.user_id) {
+        query = query.eq('user_id', args.user_id)
+      }
+
+      const { data, error } = await query
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data || [],
+        count: data?.length || 0
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      }
+    }
+  }
+
+  async createPrivilegedAccess(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const accessData = {
+        tenant_id: args.tenant_id,
+        user_id: args.user_id,
+        scope_type: args.scope_type,
+        scope_id: args.scope_id,
+        access_level: args.access_level,
+        justification: args.justification || '',
+        valid_from: args.valid_from,
+        valid_until: args.valid_until,
+        status: 'pending',
+        approved_by: null,
+        approved_at: null,
+        revoked_by: null,
+        revoked_at: null,
+        last_audit_date: null,
+        audit_notes: null,
+        created_by: args.created_by,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+
+      const { data, error } = await this.supabase
+        .from('privileged_access')
+        .insert(accessData)
+        .select()
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data[0],
+        message: 'Acesso privilegiado criado com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  async revokePrivilegedAccess(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const { data, error } = await this.supabase
+        .from('privileged_access')
+        .update({
+          status: 'revoked',
+          revoked_by: args.revoked_by,
+          revoked_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', args.access_id)
+        .eq('tenant_id', args.tenant_id)
+        .select()
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data[0],
+        message: 'Acesso privilegiado revogado com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
+  async updatePrivilegedAccessAudit(args) {
+    try {
+      if (!this.supabase) {
+        return {
+          success: false,
+          error: 'Supabase não configurado'
+        }
+      }
+
+      const { data, error } = await this.supabase
+        .from('privileged_access')
+        .update({
+          last_audit_date: new Date().toISOString(),
+          audit_notes: args.audit_notes,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', args.access_id)
+        .eq('tenant_id', args.tenant_id)
+        .select()
+
+      if (error) throw error
+
+      return {
+        success: true,
+        data: data[0],
+        message: 'Auditoria de acesso privilegiado atualizada com sucesso'
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  }
+
   async generateEffectivenessReport(args) {
     try {
       if (!this.supabase) {
@@ -404,6 +846,16 @@ class SupabaseMCPServer {
       console.log('  - create_control')
       console.log('  - list_domains')
       console.log('  - create_domain')
+      console.log('  - list_technical_documents')
+      console.log('  - create_technical_document')
+      console.log('  - list_credentials_registry')
+      console.log('  - create_credentials_registry')
+      console.log('  - approve_credential')
+      console.log('  - revoke_credential')
+      console.log('  - list_privileged_access')
+      console.log('  - create_privileged_access')
+      console.log('  - revoke_privileged_access')
+      console.log('  - update_privileged_access_audit')
       console.log('  - effectiveness_report')
       console.log('  - health_check')
       

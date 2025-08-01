@@ -6,11 +6,11 @@ WORKDIR /app
 # Instalar dependências do sistema
 RUN apk add --no-cache dumb-init
 
-# Copiar package.json e package-lock.json
-COPY package*.json ./
+# Copiar package.json
+COPY package.json ./
 
 # Instalar todas as dependências
-RUN npm ci
+RUN npm install --production
 
 # Copiar código fonte
 COPY . .
@@ -18,8 +18,13 @@ COPY . .
 # Criar diretório de logs
 RUN mkdir -p logs
 
-# Verificar se o script existe
+# Verificar se os arquivos principais existem
 RUN ls -la scripts/start-backend.js
+RUN ls -la src/api/index.js
+
+# Definir variáveis de ambiente
+ENV NODE_ENV=production
+ENV PORT=3000
 
 # Expor porta
 EXPOSE 3000

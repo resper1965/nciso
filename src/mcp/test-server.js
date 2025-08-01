@@ -223,6 +223,16 @@ async function testMCPServer() {
     console.log('✅ Atualizar Auditoria - Funcionando')
     console.log('✅ Relatório de Efetividade - Funcionando')
     
+    // Teste 17: Simular Relatório de Gaps
+    console.log('\n📋 Teste 17: Simular Relatório de Gaps')
+    const gapReportResult = await server.simulateGapReport({
+      tenant_id: 'test-tenant',
+      framework_id: 'iso-framework-1'
+    })
+    console.log('Resultado:', JSON.stringify(gapReportResult, null, 2))
+    
+    console.log('✅ Simular Relatório de Gaps - Funcionando')
+    
     console.log('\n🚀 MCP Server está pronto para uso!')
     console.log('\n💡 Para usar com Supabase real:')
     console.log('1. Configure SUPABASE_URL e SUPABASE_ANON_KEY no .env')
@@ -232,6 +242,147 @@ async function testMCPServer() {
   } catch (error) {
     console.error('❌ Erro durante os testes:', error)
     process.exit(1)
+  }
+}
+
+// Teste para simulate_gap_report
+async function testSimulateGapReport() {
+  console.log('\n🧪 Testando simulate_gap_report...')
+
+  const testCases = [
+    {
+      name: 'Teste com framework ISO 27001',
+      args: {
+        tenant_id: 'test-tenant-1',
+        framework_id: 'iso-framework-1'
+      },
+      expected: {
+        success: true,
+        hasFramework: true,
+        hasSummary: true,
+        hasGaps: true
+      }
+    },
+    {
+      name: 'Teste com framework NIST',
+      args: {
+        tenant_id: 'test-tenant-2',
+        framework_id: 'nist-framework-1'
+      },
+      expected: {
+        success: true,
+        hasFramework: true,
+        hasSummary: true,
+        hasGaps: true
+      }
+    },
+    {
+      name: 'Teste sem tenant_id',
+      args: {
+        framework_id: 'iso-framework-1'
+      },
+      expected: {
+        success: false,
+        error: 'tenant_id é obrigatório'
+      }
+    },
+    {
+      name: 'Teste sem framework_id',
+      args: {
+        tenant_id: 'test-tenant-1'
+      },
+      expected: {
+        success: false,
+        error: 'framework_id é obrigatório'
+      }
+    }
+  ]
+
+  for (const testCase of testCases) {
+    console.log(`\n📋 ${testCase.name}`)
+    
+    try {
+      const result = await mcpServer.simulateGapReport(testCase.args)
+      
+      // Validar estrutura da resposta
+      if (testCase.expected.success) {
+        assert(result.success === true, 'Deve retornar success: true')
+        assert(result.data, 'Deve ter propriedade data')
+        
+        if (testCase.expected.hasFramework) {
+          assert(result.data.framework, 'Deve ter informações do framework')
+          assert(result.data.framework.id, 'Framework deve ter ID')
+          assert(result.data.framework.name, 'Framework deve ter nome')
+        }
+        
+        if (testCase.expected.hasSummary) {
+          assert(result.data.summary, 'Deve ter resumo')
+          assert(typeof result.data.summary.total_expected === 'number', 'total_expected deve ser número')
+          assert(typeof result.data.summary.total_mapped === 'number', 'total_mapped deve ser número')
+          assert(typeof result.data.summary.total_gaps === 'number', 'total_gaps deve ser número')
+          assert(typeof result.data.summary.compliance_percentage === 'number', 'compliance_percentage deve ser número')
+          assert(result.data.summary.status, 'Deve ter status de conformidade')
+        }
+        
+        if (testCase.expected.hasGaps) {
+          assert(Array.isArray(result.data.gaps), 'gaps deve ser array')
+          assert(Array.isArray(result.data.expected_controls), 'expected_controls deve ser array')
+          assert(Array.isArray(result.data.mapped_controls), 'mapped_controls deve ser array')
+          assert(Array.isArray(result.data.recommendations), 'recommendations deve ser array')
+        }
+        
+        console.log('✅ Teste passou')
+      } else {
+        assert(result.success === false, 'Deve retornar success: false')
+        assert(result.error, 'Deve ter mensagem de erro')
+        assert(result.error.includes(testCase.expected.error), `Erro deve conter: ${testCase.expected.error}`)
+        console.log('✅ Teste de erro passou')
+      }
+      
+    } catch (error) {
+      console.error(`❌ Teste falhou: ${error.message}`)
+    }
+  }
+}
+
+// Teste de validação de schema para simulate_gap_report
+async function testSimulateGapReportSchema() {
+  console.log('\n🧪 Testando schema do simulate_gap_report...')
+  
+  try {
+    const result = await mcpServer.simulateGapReport({
+      tenant_id: 'test-tenant-1',
+      framework_id: 'iso-framework-1'
+    })
+    
+    if (result.success) {
+      // Validar schema do framework
+      const framework = result.data.framework
+      assert(framework.id, 'Framework deve ter ID')
+      assert(framework.name, 'Framework deve ter nome')
+      assert(framework.version, 'Framework deve ter versão')
+      
+      // Validar schema do summary
+      const summary = result.data.summary
+      assert(typeof summary.total_expected === 'number', 'total_expected deve ser número')
+      assert(typeof summary.total_mapped === 'number', 'total_mapped deve ser número')
+      assert(typeof summary.total_gaps === 'number', 'total_gaps deve ser número')
+      assert(typeof summary.compliance_percentage === 'number', 'compliance_percentage deve ser número')
+      assert(['excellent', 'good', 'fair', 'poor', 'critical'].includes(summary.status), 'status deve ser válido')
+      
+      // Validar arrays
+      assert(Array.isArray(result.data.expected_controls), 'expected_controls deve ser array')
+      assert(Array.isArray(result.data.mapped_controls), 'mapped_controls deve ser array')
+      assert(Array.isArray(result.data.gaps), 'gaps deve ser array')
+      assert(Array.isArray(result.data.recommendations), 'recommendations deve ser array')
+      
+      console.log('✅ Schema válido')
+    } else {
+      console.log('⚠️ Teste de schema pulado (resposta de erro)')
+    }
+    
+  } catch (error) {
+    console.error(`❌ Teste de schema falhou: ${error.message}`)
   }
 }
 

@@ -1,117 +1,271 @@
 {
-  "controls": {
-    "title": "Controles",
-    "subtitle": "Catálogo de Controles de Seguridad",
-    "description": "Gestionar y monitorear los controles de seguridad de la información",
-    
-    "actions": {
-      "create": "Crear Control",
-      "edit": "Editar Control",
-      "delete": "Eliminar Control",
-      "view": "Ver Control",
-      "duplicate": "Duplicar Control",
-      "export": "Exportar",
-      "import": "Importar"
-    },
-    
-    "fields": {
-      "name": "Nombre",
-      "description": "Descripción",
-      "type": "Tipo",
-      "domain": "Dominio",
-      "framework": "Framework",
-      "status": "Estado",
-      "effectiveness": "Efectividad",
-      "priority": "Prioridad",
-      "owner": "Responsable",
-      "created_at": "Creado en",
-      "updated_at": "Actualizado en"
-    },
-    
-    "types": {
-      "preventive": "Preventivo",
-      "corrective": "Correctivo",
-      "detective": "Detectivo",
-      "deterrent": "Disuasivo"
-    },
-    
-    "status": {
-      "active": "Activo",
-      "inactive": "Inactivo",
-      "draft": "Borrador",
-      "archived": "Archivado"
-    },
-    
-    "priorities": {
-      "low": "Baja",
-      "medium": "Media",
-      "high": "Alta",
-      "critical": "Crítica"
-    },
-    
-    "frameworks": {
-      "iso27001": "ISO 27001",
-      "nist": "NIST CSF",
-      "cobit": "COBIT",
-      "custom": "Personalizado"
-    },
-    
-    "domains": {
-      "access_control": "Control de Acceso",
-      "asset_management": "Gestión de Activos",
-      "business_continuity": "Continuidad del Negocio",
-      "communications": "Comunicaciones",
-      "compliance": "Cumplimiento",
-      "cryptography": "Criptografía",
-      "human_resources": "Recursos Humanos",
-      "incident_management": "Gestión de Incidentes",
-      "operations": "Operaciones",
-      "physical_security": "Seguridad Física",
-      "risk_management": "Gestión de Riesgos",
-      "security_architecture": "Arquitectura de Seguridad",
-      "supplier_relationships": "Relaciones con Proveedores",
-      "system_development": "Desarrollo de Sistemas"
-    },
-    
-    "messages": {
-      "created": "Control creado exitosamente",
-      "updated": "Control actualizado exitosamente",
-      "deleted": "Control eliminado exitosamente",
-      "error_creating": "Error al crear control",
-      "error_updating": "Error al actualizar control",
-      "error_deleting": "Error al eliminar control",
-      "confirm_delete": "¿Está seguro de que desea eliminar este control?",
-      "no_controls": "No se encontraron controles",
-      "loading": "Cargando controles...",
-      "saving": "Guardando..."
-    },
-    
-    "filters": {
-      "title": "Filtros",
-      "all_types": "Todos los tipos",
-      "all_status": "Todos los estados",
-      "all_frameworks": "Todos los frameworks",
-      "all_domains": "Todos los dominios",
-      "search_placeholder": "Buscar controles...",
-      "clear_filters": "Limpiar filtros"
-    },
-    
-    "stats": {
-      "total_controls": "Total de Controles",
-      "active_controls": "Controles Activos",
-      "average_effectiveness": "Efectividad Promedio",
-      "controls_by_type": "Controles por Tipo",
-      "controls_by_domain": "Controles por Dominio",
-      "controls_by_framework": "Controles por Framework"
-    },
-    
+  "title": "Controles",
+  "description": "Gestionar controles de seguridad",
+  "create": "Crear Control",
+  "edit": "Editar Control",
+  "delete": "Eliminar Control",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "loading": "Cargando...",
+  "error": "Error",
+  "success": "Éxito",
+  "no_data": "Sin datos",
+  "search": "Buscar controles...",
+  "filter": "Filtrar",
+  "clear_filters": "Limpiar Filtros",
+  "active_filters": "Filtros Activos",
+  "total_controls": "Total de Controles",
+  "controls_found": "{{count}} controles encontrados",
+  "no_controls_found": "No se encontraron controles",
+  "no_controls_with_filters": "No se encontraron controles con los filtros aplicados",
+  "all_types": "Todos los tipos",
+  "all_status": "Todos los estados",
+  "all_frameworks": "Todos los frameworks",
+  "all_domains": "Todos los dominios",
+  "all_priorities": "Todas las prioridades",
+  "form": {
+    "name": "Nombre",
+    "name_placeholder": "Ingrese el nombre del control",
+    "description": "Descripción",
+    "description_placeholder": "Describa el control de seguridad",
+    "type": "Tipo",
+    "type_placeholder": "Seleccione el tipo de control",
+    "status": "Estado",
+    "status_placeholder": "Seleccione el estado del control",
+    "frameworks": "Frameworks",
+    "frameworks_placeholder": "Seleccione los frameworks aplicables",
+    "domain": "Dominio",
+    "domain_placeholder": "Seleccione el dominio del control",
+    "effectiveness": "Efectividad",
+    "effectiveness_placeholder": "Efectividad del control (0-100%)",
+    "priority": "Prioridad",
+    "priority_placeholder": "Seleccione la prioridad del control",
+    "owner": "Propietario",
+    "owner_placeholder": "Ingrese el propietario del control",
     "validation": {
       "name_required": "El nombre es obligatorio",
-      "description_required": "La descripción es obligatoria",
+      "name_min": "El nombre debe tener al menos 3 caracteres",
+      "name_max": "El nombre no puede exceder 255 caracteres",
       "type_required": "El tipo es obligatorio",
+      "status_required": "El estado es obligatorio",
+      "frameworks_required": "Al menos un framework es obligatorio",
       "domain_required": "El dominio es obligatorio",
-      "framework_required": "El framework es obligatorio",
-      "effectiveness_range": "La efectividad debe estar entre 0 y 100"
+      "effectiveness_range": "La efectividad debe estar entre 0 y 100",
+      "priority_required": "La prioridad es obligatoria"
+    }
+  },
+  "types": {
+    "preventive": "Preventivo",
+    "corrective": "Correctivo",
+    "detective": "Detectivo",
+    "deterrent": "Disuasivo"
+  },
+  "status": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "draft": "Borrador",
+    "archived": "Archivado"
+  },
+  "frameworks": {
+    "iso27001": "ISO 27001",
+    "nist": "NIST",
+    "cobit": "COBIT",
+    "custom": "Personalizado"
+  },
+  "domains": {
+    "access_control": "Control de Acceso",
+    "asset_management": "Gestión de Activos",
+    "business_continuity": "Continuidad del Negocio",
+    "communications": "Comunicaciones",
+    "compliance": "Cumplimiento",
+    "cryptography": "Criptografía",
+    "human_resources": "Recursos Humanos",
+    "incident_management": "Gestión de Incidentes",
+    "operations": "Operaciones",
+    "physical_security": "Seguridad Física",
+    "risk_management": "Gestión de Riesgos",
+    "security_architecture": "Arquitectura de Seguridad",
+    "supplier_relationships": "Relaciones con Proveedores",
+    "system_development": "Desarrollo de Sistemas"
+  },
+  "priorities": {
+    "low": "Baja",
+    "medium": "Media",
+    "high": "Alta",
+    "critical": "Crítica"
+  },
+  "messages": {
+    "created": "Control creado exitosamente",
+    "updated": "Control actualizado exitosamente",
+    "deleted": "Control eliminado exitosamente",
+    "error_creating": "Error al crear el control",
+    "error_updating": "Error al actualizar el control",
+    "error_deleting": "Error al eliminar el control",
+    "confirm_delete": "¿Está seguro de que desea eliminar este control?",
+    "no_controls_with_filters": "No se encontraron controles con los filtros aplicados"
+  },
+  "filters": {
+    "search": "Buscar controles...",
+    "type": "Tipo de Control",
+    "status": "Estado",
+    "framework": "Framework",
+    "domain": "Dominio",
+    "priority": "Prioridad",
+    "clear_all": "Limpiar Todos",
+    "active_count": "{{count}} filtros activos"
+  },
+  "framework_mapping": {
+    "title": "Mapeo de Frameworks",
+    "stats": "{{mapped}} de {{total}} frameworks mapeados",
+    "badge": "{{count}} frameworks",
+    "no_frameworks": "No hay frameworks disponibles",
+    "instructions": "Seleccione los frameworks aplicables a este control"
+  },
+  "coverage": {
+    "title": "Cobertura de Controles",
+    "stats": "{{mapped}} de {{total}} controles mapeados",
+    "badge": "{{count}} controles",
+    "no_frameworks": "No hay frameworks disponibles",
+    "instructions": "Visualice la cobertura de controles por framework",
+    "chart_types": {
+      "bar": "Gráfico de Barras",
+      "pie": "Gráfico Circular",
+      "line": "Gráfico de Líneas"
+    },
+    "chart_labels": {
+      "coverage": "Cobertura (%)",
+      "frameworks": "Frameworks",
+      "controls": "Controles"
+    },
+    "tooltip": "{{framework}}: {{mapped}}/{{total}} controles ({{coverage}}%)",
+    "top_frameworks": "Top Frameworks",
+    "bottom_frameworks": "Frameworks con Menor Cobertura",
+    "insights": {
+      "excellent": "Excelente cobertura en {{framework}}",
+      "good": "Buena cobertura en {{framework}}",
+      "fair": "Cobertura regular en {{framework}}",
+      "poor": "Baja cobertura en {{framework}}"
+    },
+    "error": {
+      "loading": "Error al cargar datos de cobertura",
+      "no_data": "No hay datos de cobertura disponibles"
+    }
+  },
+  "export": {
+    "title": "Exportar Mapeos",
+    "exporting": "Exportando...",
+    "success": "Mapeos exportados exitosamente",
+    "formats": {
+      "csv": "CSV",
+      "json": "JSON"
+    },
+    "preview": {
+      "title": "Vista Previa de Exportación",
+      "stats": "{{total}} mapeos, {{controls}} controles, {{frameworks}} frameworks",
+      "filters": "Filtros aplicados: {{filters}}",
+      "info": "El archivo incluirá todos los mapeos con los filtros aplicados"
+    }
+  },
+  "gap_report": {
+    "title": "Reporte de Gaps",
+    "stats": "{{gaps}} gaps de {{total}} controles esperados",
+    "progress": "{{compliance}}% de cumplimiento",
+    "status": {
+      "excellent": "Excelente",
+      "good": "Bueno",
+      "fair": "Regular",
+      "poor": "Pobre"
+    },
+    "recommendations": "Recomendaciones",
+    "gaps": "Controles Faltantes",
+    "mapped": "Controles Mapeados",
+    "error": {
+      "loading": "Error al cargar reporte de gaps",
+      "no_data": "No hay datos de gaps disponibles"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard de Conformidad",
+    "subtitle": "Visión general de la cobertura de controles",
+    "error": "Error al cargar datos del dashboard",
+    "no_data": "No hay datos disponibles para el dashboard",
+    "filters": "Filtros del Dashboard",
+    "kpis": {
+      "frameworks": "Frameworks",
+      "controls": "Controles",
+      "mapped": "Mapeados",
+      "coverage": "Cobertura"
+    },
+    "chart": {
+      "title": "Cobertura por Framework",
+      "description": "Porcentaje de controles mapeados por framework"
+    },
+    "rankings": {
+      "top": "Top Frameworks",
+      "bottom": "Frameworks con Menor Cobertura"
+    },
+    "alerts": {
+      "title": "Alertas",
+      "no_coverage": "{{count}} framework(s) sin cobertura",
+      "full_coverage": "{{count}} framework(s) con cobertura completa"
+    }
+  },
+  "kpi_alert": {
+    "critical_title": "Alerta Crítico",
+    "warning_title": "Atención Requerida",
+    "success_title": "Meta Alcanzada",
+    "info_title": "Información",
+    "critical": "{{metric}} está crítico ({{threshold}}% por debajo del ideal)",
+    "warning": "{{metric}} necesita atención ({{threshold}}% por debajo del ideal)",
+    "success": "{{metric}} está dentro del rango esperado ({{threshold}}% o más)",
+    "info": "{{metric}} está cerca del ideal ({{threshold}}% por debajo)",
+    "threshold_info": "Actual: {{current}}{{unit}} | Meta: {{threshold}}{{unit}}"
+  },
+  "export": {
+    "title": "Exportar PDF",
+    "exporting": "Exportando...",
+    "dashboard_title": "Dashboard de Cumplimiento",
+    "generated_on": "Generado el",
+    "tenant": "Tenant",
+    "no_filters_applied": "Sin filtros aplicados",
+    "filters_applied": "Filtros Aplicados",
+    "generated_by": "Generado por",
+    "success": {
+      "title": "PDF Exportado",
+      "description": "Archivo {{fileName}} guardado exitosamente"
+    },
+    "error": {
+      "title": "Error de Exportación",
+      "description": "No se pudo exportar el PDF"
+    },
+    "filters": {
+      "framework": "Framework",
+      "type": "Tipo",
+      "status": "Estado",
+      "domain": "Dominio",
+      "priority": "Prioridad"
+    },
+    "stats": {
+      "frameworks": "Frameworks",
+      "controls": "Controles",
+      "coverage": "Cobertura Promedio"
+    },
+    "preview": {
+      "title": "Vista Previa de Exportación",
+      "description": "Confirme la información antes de exportar el PDF",
+      "file_info": "Información del Archivo",
+      "filename": "Nombre del archivo",
+      "format": "Formato",
+      "filters": "Filtros Aplicados",
+      "no_filters": "Sin filtros aplicados",
+      "content": "Contenido Incluido",
+      "content_header": "Encabezado con metadatos",
+      "content_filters": "Filtros aplicados",
+      "content_stats": "Estadísticas resumidas",
+      "content_charts": "Gráficos del dashboard",
+      "content_footer": "Información del pie de página",
+      "cancel": "Cancelar",
+      "export": "Exportar PDF"
     }
   }
 } 

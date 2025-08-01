@@ -82,8 +82,20 @@
       "error_deleting": "Error deleting control",
       "confirm_delete": "Are you sure you want to delete this control?",
       "no_controls": "No controls found",
+      "no_controls_with_filters": "No controls found with applied filters",
       "loading": "Loading controls...",
-      "saving": "Saving..."
+      "saving": "Saving...",
+      "error_loading_frameworks": "Error loading frameworks",
+      "error_loading_mappings": "Error loading mappings",
+      "error_adding_mapping": "Error adding mapping",
+      "error_removing_mapping": "Error removing mapping",
+      "framework_mapping_added": "Framework mapping added successfully",
+      "framework_mapping_removed": "Framework mapping removed successfully",
+      "error_loading_coverage": "Error loading coverage data",
+      "error_no_tenant": "Tenant ID is required for export",
+      "error_permission": "No permission to export data",
+      "error_general": "Error exporting mappings",
+      "error_loading": "Error loading gap report"
     },
     
     "filters": {
@@ -92,6 +104,7 @@
       "all_status": "All status",
       "all_frameworks": "All frameworks",
       "all_domains": "All domains",
+      "all_priorities": "All priorities",
       "search_placeholder": "Search controls...",
       "clear_filters": "Clear filters"
     },
@@ -105,6 +118,39 @@
       "controls_by_framework": "Controls by Framework"
     },
     
+    "types": {
+      "preventive": "Preventive",
+      "detective": "Detective",
+      "corrective": "Corrective",
+      "deterrent": "Deterrent"
+    },
+    
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "draft": "Draft",
+      "archived": "Archived"
+    },
+    
+    "domains": {
+      "governance": "Governance",
+      "access_control": "Access Control",
+      "asset_management": "Asset Management",
+      "business_continuity": "Business Continuity",
+      "incident_management": "Incident Management",
+      "monitoring": "Monitoring",
+      "risk_management": "Risk Management",
+      "vendor_management": "Vendor Management",
+      "training": "Training"
+    },
+    
+    "priorities": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    
     "validation": {
       "name_required": "Name is required",
       "description_required": "Description is required",
@@ -112,6 +158,215 @@
       "domain_required": "Domain is required",
       "framework_required": "Framework is required",
       "effectiveness_range": "Effectiveness must be between 0 and 100"
+    },
+    
+    "framework_mapping": {
+      "title": "Framework Mapping",
+      "total_frameworks": "Total Frameworks",
+      "mapped": "Mapped",
+      "unmapped": "Unmapped",
+      "mapped_badge": "Mapped",
+      "no_frameworks_available": "No frameworks available",
+      "instructions": "Check the frameworks that apply to this control"
+    },
+    
+    "coverage": {
+      "title": "Framework Coverage Report",
+      "no_data": "No coverage data available",
+      "stats": {
+        "frameworks": "Frameworks",
+        "controls": "Controls",
+        "mapped": "Mapped",
+        "coverage": "Coverage"
+      },
+      "chart_types": {
+        "bar": "Bars",
+        "pie": "Pie",
+        "line": "Line"
+      },
+      "chart": {
+        "mapped": "Mapped",
+        "unmapped": "Unmapped",
+        "coverage_percentage": "Coverage (%)"
+      },
+      "tooltip": {
+        "total": "Total",
+        "mapped": "Mapped",
+        "coverage": "Coverage",
+        "version": "Version"
+      },
+      "top_frameworks": "Top Frameworks",
+      "bottom_frameworks": "Bottom Frameworks",
+            "insights": {
+        "title": "Insights",
+        "low_coverage": "Low coverage detected: {{percentage}}%",
+        "good_coverage": "Good coverage: {{percentage}}%",
+        "frameworks_without_coverage": "{{count}} frameworks without coverage",
+        "frameworks_full_coverage": "{{count}} frameworks with full coverage"
+      },
+      "error_loading": "Error loading coverage data",
+      "error_no_tenant": "Tenant ID is required",
+      "using_mock_data": "Using mock data as fallback"
+     },
+     
+     "export": {
+       "title": "Export Mappings",
+       "exporting": "Exporting...",
+       "success": "Mappings exported successfully in {{format}}",
+       "format": {
+         "csv": "CSV",
+         "json": "JSON"
+       },
+       "preview": "Preview",
+       "preview_title": "Export Preview",
+       "stats": {
+         "title": "Statistics",
+         "mappings": "Mappings",
+         "controls": "Controls",
+         "frameworks": "Frameworks",
+         "file_size": "Estimated Size"
+       },
+       "filters": {
+         "title": "Applied Filters"
+       },
+       "info": {
+         "csv_excel": "CSV compatible with Excel and audit tools",
+         "json_audit": "Structured JSON for analysis and audit",
+         "timestamp": "File includes timestamp and applied filters"
+       }
+     },
+     
+     "gap_report": {
+       "title": "Coverage Gap Report",
+       "error_loading": "Error loading gap report",
+       "stats": {
+         "expected": "Expected",
+         "mapped": "Mapped",
+         "gaps": "Gaps",
+         "compliance": "Compliance"
+       },
+       "progress": {
+         "label": "Compliance Progress",
+         "mapped": "mapped",
+         "gaps": "gaps"
+       },
+       "status": {
+         "excellent": "Excellent",
+         "good": "Good",
+         "fair": "Fair",
+         "poor": "Poor",
+         "critical": "Critical",
+         "description": "Compliance: {{percentage}}%"
+       },
+       "recommendations": {
+         "title": "Recommendations"
+       },
+       "gaps": {
+         "title": "Unimplemented Controls"
+       },
+             "mapped": {
+        "title": "Implemented Controls"
+      }
+    },
+    
+    "dashboard": {
+      "title": "Controls Dashboard",
+      "subtitle": "Overview of control coverage by framework",
+      "error_title": "Dashboard Error",
+      "no_data": "No coverage data available",
+      "filters": {
+        "title": "Filters",
+        "domain": "Domain",
+        "type": "Type",
+        "framework": "Framework",
+              "domain_placeholder": "Filter by domain...",
+      "type_placeholder": "Filter by type...",
+      "framework_placeholder": "Filter by framework...",
+      "status_placeholder": "Filter by status...",
+      "priority_placeholder": "Filter by priority..."
+      },
+      "kpis": {
+        "frameworks": "Frameworks",
+        "controls": "Controls",
+        "mapped": "Mapped",
+        "coverage": "Coverage",
+        "frameworks_description": "Total frameworks",
+        "controls_description": "Total controls",
+        "mapped_description": "Mapped controls",
+        "coverage_description": "Average coverage"
+      },
+      "chart": {
+        "title": "Coverage by Framework"
+      },
+      "rankings": {
+        "top": "Top Frameworks",
+        "bottom": "Frameworks with Lowest Coverage"
+      },
+      "alerts": {
+        "title": "Alerts",
+        "no_coverage": "{{count}} framework(s) without coverage",
+              "full_coverage": "{{count}} framework(s) with full coverage"
+    },
+    
+    "kpi_alert": {
+      "critical_title": "Critical Alert",
+      "warning_title": "Attention Required",
+      "success_title": "Target Achieved",
+      "info_title": "Information",
+      "critical": "{{metric}} is critical ({{threshold}}% below ideal)",
+      "warning": "{{metric}} needs attention ({{threshold}}% below ideal)",
+      "success": "{{metric}} is within expected range ({{threshold}}% or more)",
+      "info": "{{metric}} is close to ideal ({{threshold}}% below)",
+      "threshold_info": "Current: {{current}}{{unit}} | Target: {{threshold}}{{unit}}"
+    },
+    
+    "export": {
+      "title": "Export PDF",
+      "exporting": "Exporting...",
+      "dashboard_title": "Compliance Dashboard",
+      "generated_on": "Generated on",
+      "tenant": "Tenant",
+      "no_filters_applied": "No filters applied",
+      "filters_applied": "Applied Filters",
+      "generated_by": "Generated by",
+      "success": {
+        "title": "PDF Exported",
+        "description": "File {{fileName}} saved successfully"
+      },
+      "error": {
+        "title": "Export Error",
+        "description": "Could not export PDF"
+      },
+      "filters": {
+        "framework": "Framework",
+        "type": "Type",
+        "status": "Status",
+        "domain": "Domain",
+        "priority": "Priority"
+      },
+      "stats": {
+        "frameworks": "Frameworks",
+        "controls": "Controls",
+        "coverage": "Average Coverage"
+      },
+      "preview": {
+        "title": "Export Preview",
+        "description": "Confirm information before exporting PDF",
+        "file_info": "File Information",
+        "filename": "Filename",
+        "format": "Format",
+        "filters": "Applied Filters",
+        "no_filters": "No filters applied",
+        "content": "Included Content",
+        "content_header": "Header with metadata",
+        "content_filters": "Applied filters",
+        "content_stats": "Summary statistics",
+        "content_charts": "Dashboard charts",
+        "content_footer": "Footer information",
+        "cancel": "Cancel",
+        "export": "Export PDF"
+      }
     }
   }
+}
 } 

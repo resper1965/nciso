@@ -1081,6 +1081,258 @@ class SupabaseMCPServer {
     }
   }
 
+  // Comando para obter relatório de cobertura de controles por framework
+  async getCoverageReport(args) {
+    try {
+      if (!this.supabase) {
+        throw new Error('Supabase não está configurado')
+      }
+
+      const { tenant_id, filters = {} } = args
+
+      if (!tenant_id) {
+        throw new Error('tenant_id é obrigatório')
+      }
+
+      // Query para obter dados de cobertura por framework
+      const { data: coverageData, error } = await this.supabase
+        .rpc('get_control_framework_coverage', {
+          p_tenant_id: tenant_id,
+          p_domain_filter: filters.domain || null,
+          p_type_filter: filters.type || null,
+          p_framework_filter: filters.framework || null
+        })
+
+      if (error) {
+        throw new Error(`Erro ao obter dados de cobertura: ${error.message}`)
+      }
+
+      // Processar dados para formato esperado
+      const report = coverageData?.map(item => ({
+        framework_id: item.framework_id,
+        framework_name: item.framework_name,
+        framework_version: item.framework_version,
+        total_controls: parseInt(item.total_controls) || 0,
+        mapped_controls: parseInt(item.mapped_controls) || 0,
+        coverage_percentage: parseFloat(item.coverage_percentage) || 0,
+        unmapped_controls: parseInt(item.total_controls) - parseInt(item.mapped_controls) || 0
+      })) || []
+
+      // Calcular estatísticas gerais
+      const totalFrameworks = report.length
+      const totalControls = report.reduce((sum, item) => sum + item.total_controls, 0)
+      const totalMapped = report.reduce((sum, item) => sum + item.mapped_controls, 0)
+      const averageCoverage = totalControls > 0 ? (totalMapped / totalControls) * 100 : 0
+
+      return {
+        success: true,
+        data: {
+          frameworks: report,
+          summary: {
+            total_frameworks: totalFrameworks,
+            total_controls: totalControls,
+            total_mapped: totalMapped,
+            average_coverage: Math.round(averageCoverage * 100) / 100
+          },
+          filters_applied: filters
+        }
+      }
+    } catch (error) {
+      console.error('❌ Erro no comando get_coverage_report:', error)
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  },
+
+  // Comando para simular relatório de gaps de cobertura por framework
+  async simulateGapReport(args) {
+    try {
+      if (!this.supabase) {
+        throw new Error('Supabase não está configurado')
+      }
+
+      const { tenant_id, framework_id } = args
+
+      if (!tenant_id) {
+        throw new Error('tenant_id é obrigatório')
+      }
+
+      if (!framework_id) {
+        throw new Error('framework_id é obrigatório')
+      }
+
+      // Obter informações do framework
+      const { data: frameworkData, error: frameworkError } = await this.supabase
+        .from('frameworks')
+        .select('*')
+        .eq('id', framework_id)
+        .eq('tenant_id', tenant_id)
+        .single()
+
+      if (frameworkError || !frameworkData) {
+        throw new Error('Framework não encontrado')
+      }
+
+      // Obter controles esperados pelo framework (simulação baseada no tipo)
+      const expectedControls = this.getExpectedControlsByFramework(frameworkData.name, frameworkData.version)
+
+      // Obter controles mapeados para este framework
+      const { data: mappedControls, error: mappedError } = await this.supabase
+        .from('control_frameworks')
+        .select(`
+          control_id,
+          global_controls!inner(
+            id,
+            name,
+            type,
+            domain,
+            status,
+            priority
+          )
+        `)
+        .eq('framework_id', framework_id)
+        .eq('tenant_id', tenant_id)
+
+      if (mappedError) {
+        throw new Error(`Erro ao obter controles mapeados: ${mappedError.message}`)
+      }
+
+      // Calcular gaps
+      const mappedControlIds = new Set(mappedControls?.map(item => item.control_id) || [])
+      const gaps = expectedControls.filter(control => !mappedControlIds.has(control.id))
+      
+      const totalExpected = expectedControls.length
+      const totalMapped = mappedControls?.length || 0
+      const totalGaps = gaps.length
+      const compliancePercentage = totalExpected > 0 ? Math.round((totalMapped / totalExpected) * 100) : 0
+
+      // Classificar gaps por prioridade
+      const prioritizedGaps = this.prioritizeGaps(gaps, frameworkData.name)
+
+      return {
+        success: true,
+        data: {
+          framework: {
+            id: frameworkData.id,
+            name: frameworkData.name,
+            version: frameworkData.version,
+            description: frameworkData.description
+          },
+          summary: {
+            total_expected: totalExpected,
+            total_mapped: totalMapped,
+            total_gaps: totalGaps,
+            compliance_percentage: compliancePercentage,
+            status: this.getComplianceStatus(compliancePercentage)
+          },
+          expected_controls: expectedControls,
+          mapped_controls: mappedControls?.map(item => ({
+            id: item.control_id,
+            name: item.global_controls.name,
+            type: item.global_controls.type,
+            domain: item.global_controls.domain,
+            status: item.global_controls.status,
+            priority: item.global_controls.priority
+          })) || [],
+          gaps: prioritizedGaps,
+          recommendations: this.generateRecommendations(compliancePercentage, totalGaps, frameworkData.name)
+        }
+      }
+    } catch (error) {
+      console.error('❌ Erro no comando simulate_gap_report:', error)
+      return {
+        success: false,
+        error: error.message
+      }
+    }
+  },
+
+  // Obter controles esperados por framework (simulação)
+  getExpectedControlsByFramework(frameworkName, version) {
+    const controls = {
+      'ISO 27001': [
+        { id: 'iso-001', name: 'Política de Segurança da Informação', type: 'preventive', domain: 'governance', priority: 'critical' },
+        { id: 'iso-002', name: 'Organização da Segurança da Informação', type: 'preventive', domain: 'governance', priority: 'critical' },
+        { id: 'iso-003', name: 'Controle de Acesso', type: 'preventive', domain: 'access_control', priority: 'high' },
+        { id: 'iso-004', name: 'Gestão de Ativos', type: 'preventive', domain: 'asset_management', priority: 'high' },
+        { id: 'iso-005', name: 'Continuidade de Negócio', type: 'preventive', domain: 'business_continuity', priority: 'high' },
+        { id: 'iso-006', name: 'Gestão de Incidentes', type: 'corrective', domain: 'incident_management', priority: 'medium' },
+        { id: 'iso-007', name: 'Monitoramento e Auditoria', type: 'detective', domain: 'monitoring', priority: 'medium' },
+        { id: 'iso-008', name: 'Gestão de Riscos', type: 'preventive', domain: 'risk_management', priority: 'critical' },
+        { id: 'iso-009', name: 'Gestão de Fornecedores', type: 'preventive', domain: 'vendor_management', priority: 'medium' },
+        { id: 'iso-010', name: 'Treinamento e Conscientização', type: 'preventive', domain: 'training', priority: 'medium' }
+      ],
+      'NIST': [
+        { id: 'nist-001', name: 'Identificar', type: 'preventive', domain: 'asset_management', priority: 'critical' },
+        { id: 'nist-002', name: 'Proteger', type: 'preventive', domain: 'access_control', priority: 'critical' },
+        { id: 'nist-003', name: 'Detectar', type: 'detective', domain: 'monitoring', priority: 'high' },
+        { id: 'nist-004', name: 'Responder', type: 'corrective', domain: 'incident_management', priority: 'high' },
+        { id: 'nist-005', name: 'Recuperar', type: 'corrective', domain: 'business_continuity', priority: 'high' }
+      ],
+      'COBIT': [
+        { id: 'cobit-001', name: 'Alinhar, Planejar e Organizar', type: 'preventive', domain: 'governance', priority: 'critical' },
+        { id: 'cobit-002', name: 'Construir, Adquirir e Implementar', type: 'preventive', domain: 'implementation', priority: 'high' },
+        { id: 'cobit-003', name: 'Entregar, Servir e Suportar', type: 'preventive', domain: 'service_delivery', priority: 'high' },
+        { id: 'cobit-004', name: 'Monitorar, Avaliar e Avaliar', type: 'detective', domain: 'monitoring', priority: 'medium' }
+      ]
+    }
+
+    return controls[frameworkName] || []
+  },
+
+  // Priorizar gaps por criticidade
+  prioritizeGaps(gaps, frameworkName) {
+    const priorityOrder = { critical: 1, high: 2, medium: 3, low: 4 }
+    
+    return gaps.sort((a, b) => {
+      const priorityA = priorityOrder[a.priority] || 5
+      const priorityB = priorityOrder[b.priority] || 5
+      return priorityA - priorityB
+    })
+  },
+
+  // Obter status de conformidade
+  getComplianceStatus(percentage) {
+    if (percentage >= 90) return 'excellent'
+    if (percentage >= 75) return 'good'
+    if (percentage >= 50) return 'fair'
+    if (percentage >= 25) return 'poor'
+    return 'critical'
+  },
+
+  // Gerar recomendações
+  generateRecommendations(compliancePercentage, totalGaps, frameworkName) {
+    const recommendations = []
+
+    if (compliancePercentage < 50) {
+      recommendations.push({
+        type: 'critical',
+        message: `Cobertura crítica (${compliancePercentage}%). Implemente controles prioritários imediatamente.`
+      })
+    } else if (compliancePercentage < 75) {
+      recommendations.push({
+        type: 'warning',
+        message: `Cobertura baixa (${compliancePercentage}%). Foque nos controles de alta prioridade.`
+      })
+    }
+
+    if (totalGaps > 10) {
+      recommendations.push({
+        type: 'info',
+        message: `${totalGaps} gaps identificados. Considere um plano de implementação gradual.`
+      })
+    }
+
+    recommendations.push({
+      type: 'success',
+      message: `Framework ${frameworkName}: ${totalGaps} controles pendentes de implementação.`
+    })
+
+    return recommendations
+  },
+
   async healthCheck() {
     try {
       if (!this.supabase) {
@@ -1142,6 +1394,8 @@ class SupabaseMCPServer {
       console.log('  - list_external_documents_by_policy')
       console.log('  - download_document')
       console.log('  - generate_embeddings')
+      console.log('  - get_coverage_report')
+      console.log('  - simulate_gap_report')
       console.log('  - health_check')
       
       // Manter o processo ativo

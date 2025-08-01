@@ -3,6 +3,9 @@ const { createClient } = require('@supabase/supabase-js');
 const { z } = require('zod');
 const router = express.Router();
 
+// Importar router de efetividade
+const effectivenessRouter = require('./effectiveness');
+
 // Initialize Supabase client
 let supabase = null;
 try {
@@ -546,5 +549,8 @@ router.get('/stats', authenticateToken, async (req, res) => {
     });
   }
 });
+
+// Montar router de efetividade
+router.use('/effectiveness', effectivenessRouter);
 
 module.exports = router; 

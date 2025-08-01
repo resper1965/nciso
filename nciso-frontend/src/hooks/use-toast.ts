@@ -1,3 +1,13 @@
-import { useToast as useToastOriginal } from '@/components/ui/use-toast'
+import { toast } from 'sonner'
 
-export { useToast } from '@/components/ui/use-toast' 
+export const useToast = () => {
+  return {
+    toast: (options: any) => {
+      if (options.variant === 'destructive') {
+        toast.error(options.description || options.title)
+      } else {
+        toast.success(options.description || options.title)
+      }
+    }
+  }
+} 

@@ -10,7 +10,7 @@ RUN apk add --no-cache dumb-init
 COPY package.json ./
 
 # Instalar todas as dependências
-RUN npm install --production
+RUN npm install
 
 # Copiar código fonte
 COPY . .

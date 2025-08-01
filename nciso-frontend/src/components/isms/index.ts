@@ -18,6 +18,9 @@ export { TechnicalDocumentDetail } from './technical-doc-detail'
 export { CredentialsRegistryList } from './credentials-registry-list'
 export { CredentialsRegistryForm } from './credentials-registry-form'
 export { CredentialsRegistryDetail } from './credentials-registry-detail'
+export { PrivilegedAccessList } from './privileged-access-list'
+export { PrivilegedAccessForm } from './privileged-access-form'
+export { PrivilegedAccessDetail } from './privileged-access-detail'
 
 // Re-export types for convenience
 export type {

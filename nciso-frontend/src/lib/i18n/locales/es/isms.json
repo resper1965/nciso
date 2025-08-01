@@ -426,6 +426,328 @@
       "all_status": "Todos los estados",
       "all_organizations": "Todas las organizaciones",
       "clear_filters": "Limpiar filtros"
+    },
+    
+    "technicalDocs": {
+      "title": "Documentos Técnicos",
+      "description": "Gestión de documentos técnicos y procedimientos",
+      "list": {
+        "title": "Documentos Técnicos",
+        "description": "Gestión de documentos técnicos y procedimientos de seguridad",
+        "searchPlaceholder": "Buscar documentos...",
+        "filters": {
+          "all": "Todos",
+          "active": "Activos",
+          "inactive": "Inactivos"
+        },
+        "actions": {
+          "create": "Crear Documento",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "view": "Ver Detalles",
+          "download": "Descargar"
+        },
+        "columns": {
+          "name": "Nombre",
+          "type": "Tipo",
+          "version": "Versión",
+          "status": "Estado",
+          "createdAt": "Creado",
+          "updatedAt": "Actualizado",
+          "actions": "Acciones"
+        },
+        "status": {
+          "active": "Activo",
+          "inactive": "Inactivo",
+          "draft": "Borrador",
+          "review": "En Revisión",
+          "approved": "Aprobado"
+        },
+        "types": {
+          "policy": "Política",
+          "procedure": "Procedimiento",
+          "standard": "Estándar",
+          "guideline": "Directriz",
+          "template": "Plantilla",
+          "manual": "Manual",
+          "checklist": "Lista de Verificación"
+        }
+      },
+      "form": {
+        "title": "Documento Técnico",
+        "createTitle": "Crear Documento Técnico",
+        "editTitle": "Editar Documento Técnico",
+        "fields": {
+          "name": "Nombre del Documento",
+          "description": "Descripción",
+          "type": "Tipo de Documento",
+          "version": "Versión",
+          "content": "Contenido",
+          "file": "Archivo",
+          "tags": "Etiquetas",
+          "scope": "Alcance ISMS",
+          "asset": "Activo Relacionado",
+          "control": "Control Relacionado"
+        },
+        "validation": {
+          "nameRequired": "El nombre es obligatorio",
+          "typeRequired": "El tipo es obligatorio",
+          "versionRequired": "La versión es obligatoria"
+        },
+        "actions": {
+          "save": "Guardar",
+          "cancel": "Cancelar",
+          "reset": "Restablecer"
+        }
+      },
+      "detail": {
+        "title": "Detalles del Documento",
+        "sections": {
+          "basic": "Información Básica",
+          "file": "Archivo",
+          "relationships": "Relaciones",
+          "metadata": "Metadatos"
+        },
+        "fields": {
+          "name": "Nombre",
+          "description": "Descripción",
+          "type": "Tipo",
+          "version": "Versión",
+          "status": "Estado",
+          "fileSize": "Tamaño del Archivo",
+          "fileType": "Tipo de Archivo",
+          "uploadDate": "Fecha de Subida",
+          "tags": "Etiquetas",
+          "scope": "Alcance ISMS",
+          "asset": "Activo",
+          "control": "Control"
+        },
+        "actions": {
+          "download": "Descargar",
+          "edit": "Editar",
+          "close": "Cerrar"
+        }
+      }
+    },
+    
+    "credentialsRegistry": {
+      "title": "Registro de Credenciales",
+      "description": "Gestión de credenciales de acceso a activos",
+      "list": {
+        "title": "Registro de Credenciales",
+        "description": "Gestión de credenciales de acceso a activos de información",
+        "searchPlaceholder": "Buscar credenciales...",
+        "filters": {
+          "all": "Todas",
+          "active": "Activas",
+          "inactive": "Inactivas",
+          "expired": "Expiradas",
+          "expiringSoon": "Expirando Pronto"
+        },
+        "actions": {
+          "create": "Crear Credencial",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "view": "Ver Detalles",
+          "approve": "Aprobar",
+          "revoke": "Revocar"
+        },
+        "columns": {
+          "asset": "Activo",
+          "holder": "Titular",
+          "accessType": "Tipo de Acceso",
+          "status": "Estado",
+          "validFrom": "Válido Desde",
+          "validUntil": "Válido Hasta",
+          "actions": "Acciones"
+        },
+        "status": {
+          "active": "Activa",
+          "inactive": "Inactiva",
+          "expired": "Expirada",
+          "expiringSoon": "Expirando Pronto",
+          "pending": "Pendiente",
+          "approved": "Aprobada",
+          "revoked": "Revocada"
+        },
+        "accessTypes": {
+          "read": "Lectura",
+          "write": "Escritura",
+          "admin": "Administración",
+          "full": "Acceso Completo"
+        }
+      },
+      "form": {
+        "title": "Credencial",
+        "createTitle": "Crear Credencial",
+        "editTitle": "Editar Credencial",
+        "fields": {
+          "asset": "Activo",
+          "holderType": "Tipo de Titular",
+          "holder": "Titular",
+          "accessType": "Tipo de Acceso",
+          "justification": "Justificación",
+          "validFrom": "Válido Desde",
+          "validUntil": "Válido Hasta"
+        },
+        "validation": {
+          "assetRequired": "El activo es obligatorio",
+          "holderRequired": "El titular es obligatorio",
+          "accessTypeRequired": "El tipo de acceso es obligatorio",
+          "validFromRequired": "La fecha de inicio es obligatoria",
+          "validUntilRequired": "La fecha de fin es obligatoria"
+        },
+        "actions": {
+          "save": "Guardar",
+          "cancel": "Cancelar",
+          "reset": "Restablecer"
+        }
+      },
+      "detail": {
+        "title": "Detalles de la Credencial",
+        "sections": {
+          "basic": "Información Básica",
+          "holder": "Titular",
+          "validity": "Validez",
+          "approval": "Aprobación",
+          "asset": "Activo"
+        },
+        "fields": {
+          "asset": "Activo",
+          "holderType": "Tipo de Titular",
+          "holder": "Titular",
+          "accessType": "Tipo de Acceso",
+          "justification": "Justificación",
+          "validFrom": "Válido Desde",
+          "validUntil": "Válido Hasta",
+          "status": "Estado",
+          "approvedBy": "Aprobado Por",
+          "approvedAt": "Aprobado En",
+          "revokedBy": "Revocado Por",
+          "revokedAt": "Revocado En"
+        },
+        "actions": {
+          "approve": "Aprobar",
+          "revoke": "Revocar",
+          "edit": "Editar",
+          "close": "Cerrar"
+        }
+      }
+    },
+    
+    "privilegedAccess": {
+      "title": "Acceso Privilegiado",
+      "description": "Gestión de accesos privilegiados a sistemas críticos",
+      "list": {
+        "title": "Acceso Privilegiado",
+        "description": "Gestión de accesos privilegiados a sistemas, bases de datos y aplicaciones críticas",
+        "searchPlaceholder": "Buscar accesos...",
+        "filters": {
+          "all": "Todos",
+          "active": "Activos",
+          "inactive": "Inactivos",
+          "expired": "Expirados",
+          "expiringSoon": "Expirando Pronto",
+          "needsAudit": "Necesita Auditoría"
+        },
+        "actions": {
+          "create": "Crear Acceso",
+          "edit": "Editar",
+          "delete": "Eliminar",
+          "view": "Ver Detalles",
+          "revoke": "Revocar",
+          "updateAudit": "Actualizar Auditoría"
+        },
+        "columns": {
+          "user": "Usuario",
+          "scopeType": "Tipo de Alcance",
+          "scopeId": "ID del Alcance",
+          "accessLevel": "Nivel de Acceso",
+          "status": "Estado",
+          "validFrom": "Válido Desde",
+          "validUntil": "Válido Hasta",
+          "actions": "Acciones"
+        },
+        "status": {
+          "active": "Activo",
+          "inactive": "Inactivo",
+          "expired": "Expirado",
+          "expiringSoon": "Expirando Pronto",
+          "needsAudit": "Necesita Auditoría",
+          "revoked": "Revocado"
+        },
+        "accessLevels": {
+          "read": "Lectura",
+          "write": "Escritura",
+          "admin": "Administración",
+          "full": "Acceso Completo"
+        },
+        "scopeTypes": {
+          "system": "Sistema",
+          "database": "Base de Datos",
+          "application": "Aplicación",
+          "network": "Red",
+          "infrastructure": "Infraestructura"
+        }
+      },
+      "form": {
+        "title": "Acceso Privilegiado",
+        "createTitle": "Crear Acceso Privilegiado",
+        "editTitle": "Editar Acceso Privilegiado",
+        "fields": {
+          "user": "Usuario",
+          "scopeType": "Tipo de Alcance",
+          "scopeId": "ID del Alcance",
+          "accessLevel": "Nivel de Acceso",
+          "justification": "Justificación",
+          "validFrom": "Válido Desde",
+          "validUntil": "Válido Hasta"
+        },
+        "validation": {
+          "userRequired": "El usuario es obligatorio",
+          "scopeTypeRequired": "El tipo de alcance es obligatorio",
+          "scopeIdRequired": "El ID del alcance es obligatorio",
+          "accessLevelRequired": "El nivel de acceso es obligatorio",
+          "validFromRequired": "La fecha de inicio es obligatoria",
+          "validUntilRequired": "La fecha de fin es obligatoria"
+        },
+        "actions": {
+          "save": "Guardar",
+          "cancel": "Cancelar",
+          "reset": "Restablecer"
+        }
+      },
+      "detail": {
+        "title": "Detalles del Acceso Privilegiado",
+        "sections": {
+          "basic": "Información Básica",
+          "validity": "Validez",
+          "approval": "Aprobación",
+          "audit": "Auditoría"
+        },
+        "fields": {
+          "user": "Usuario",
+          "scopeType": "Tipo de Alcance",
+          "scopeId": "ID del Alcance",
+          "accessLevel": "Nivel de Acceso",
+          "justification": "Justificación",
+          "validFrom": "Válido Desde",
+          "validUntil": "Válido Hasta",
+          "status": "Estado",
+          "approvedBy": "Aprobado Por",
+          "approvedAt": "Aprobado En",
+          "revokedBy": "Revocado Por",
+          "revokedAt": "Revocado En",
+          "lastAuditDate": "Última Auditoría",
+          "auditNotes": "Notas de Auditoría"
+        },
+        "actions": {
+          "revoke": "Revocar",
+          "updateAudit": "Actualizar Auditoría",
+          "edit": "Editar",
+          "close": "Cerrar"
+        }
+      }
     }
   }
 } 
